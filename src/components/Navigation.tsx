@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Switchers from "./Switchers";
 
 export default function Navigation() {
@@ -11,7 +12,14 @@ export default function Navigation() {
       {/* Mobile Navigation */}
       <nav className="fixed top-0 left-0 right-0 bg-background/95 backdrop-blur-sm z-40 border-b border-secondary/10 md:hidden">
         <div className="mx-auto px-6 py-4 flex justify-between items-center">
-          <span className="font-mono text-primary font-bold text-xl">RT</span>
+          <Image
+            src="/logo.webp"
+            alt="Logo"
+            width={40}
+            height={40}
+            className="w-10 h-10 object-contain"
+            priority
+          />
 
           <div className="flex items-center gap-4">
             <Switchers />
