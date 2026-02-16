@@ -19,6 +19,9 @@ const mono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "Reinaldo Tineo | Full Stack Developer",
   description: "Full Stack Developer specialized in Laravel, Python, TypeScript, Vue.js, and React.",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({
