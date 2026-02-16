@@ -1,18 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+
 
 export default function Background() {
-    const [mounted, setMounted] = useState(false);
-
-    useEffect(() => {
-        // eslint-disable-next-line
-        setMounted(true);
-    }, []);
-
-    if (!mounted) return null;
-
     return (
         <div className="fixed inset-0 z-[-1] overflow-hidden pointer-events-none">
             <motion.div
@@ -27,7 +18,7 @@ export default function Background() {
                     repeat: Infinity,
                     ease: "easeInOut",
                 }}
-                className="absolute top-[-20%] left-[-20%] w-[600px] h-[600px] rounded-full bg-primary/40 blur-[80px]"
+                className="absolute top-[-20%] left-[-20%] w-[600px] h-[600px] rounded-full bg-primary/40 blur-[80px] transform-gpu will-change-transform"
             />
             <motion.div
                 animate={{
@@ -42,7 +33,7 @@ export default function Background() {
                     ease: "easeInOut",
                     delay: 2,
                 }}
-                className="absolute bottom-[-20%] right-[-20%] w-[700px] h-[700px] rounded-full bg-secondary/30 blur-[100px]"
+                className="absolute bottom-[-20%] right-[-20%] w-[700px] h-[700px] rounded-full bg-secondary/30 blur-[100px] transform-gpu will-change-transform"
             />
             <motion.div
                 animate={{
@@ -55,7 +46,7 @@ export default function Background() {
                     ease: "easeInOut",
                     delay: 5,
                 }}
-                className="absolute top-[30%] left-[20%] w-[500px] h-[500px] rounded-full bg-primary/20 blur-[90px]"
+                className="absolute top-[30%] left-[20%] w-[500px] h-[500px] rounded-full bg-primary/20 blur-[90px] transform-gpu will-change-transform"
             />
         </div>
     );
