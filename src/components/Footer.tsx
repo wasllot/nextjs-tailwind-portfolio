@@ -1,0 +1,18 @@
+"use client";
+
+import { useLanguage } from "./LanguageContext";
+
+export default function Footer() {
+  const { t } = useLanguage();
+
+  return (
+    <footer className="py-8 px-6 text-center text-sm text-secondary border-t border-secondary/10">
+      <p className="font-mono">
+        {t("footer.designed")} Reinaldo Tineo
+      </p>
+      <p className="font-mono mt-2">
+        {t("footer.built")} <a href="https://nextjs.org" target="_blank" rel="noopener noreferrer" className="hover:text-primary">Next.js</a> & <a href="https://tailwindcss.com" target="_blank" rel="noopener noreferrer" className="hover:text-primary">Tailwind CSS</a>
+      </p>
+    </footer>
+  );
+}
