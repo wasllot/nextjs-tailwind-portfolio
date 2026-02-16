@@ -35,7 +35,9 @@ export default function RootLayout({
         <MouseGlow />
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
           <LanguageProvider>
-            <Switchers />
+            <div className="fixed top-6 right-6 z-50 hidden md:flex">
+              <Switchers />
+            </div>
             {children}
           </LanguageProvider>
         </ThemeProvider>

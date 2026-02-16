@@ -16,26 +16,24 @@ export default function Switchers() {
   if (!mounted) return null;
 
   return (
-    <div className="fixed top-4 right-4 z-50 flex items-center gap-2">
+    <div className="flex items-center gap-2">
       {/* Language Switcher */}
       <div className="flex items-center bg-secondary/10 rounded-full p-1">
         <button
           onClick={() => setLanguage("en")}
-          className={`px-3 py-1.5 rounded-full text-xs font-mono transition-colors ${
-            language === "en" 
-              ? "bg-primary text-background" 
+          className={`px-3 py-1.5 rounded-full text-xs font-mono transition-colors ${language === "en"
+              ? "bg-primary text-background"
               : "text-foreground hover:text-primary"
-          }`}
+            }`}
         >
           EN
         </button>
         <button
           onClick={() => setLanguage("es")}
-          className={`px-3 py-1.5 rounded-full text-xs font-mono transition-colors ${
-            language === "es" 
-              ? "bg-primary text-background" 
+          className={`px-3 py-1.5 rounded-full text-xs font-mono transition-colors ${language === "es"
+              ? "bg-primary text-background"
               : "text-foreground hover:text-primary"
-          }`}
+            }`}
         >
           ES
         </button>

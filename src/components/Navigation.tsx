@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Switchers from "./Switchers";
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,18 +11,22 @@ export default function Navigation() {
       {/* Mobile Navigation */}
       <nav className="fixed top-0 left-0 right-0 bg-background/95 backdrop-blur-sm z-40 border-b border-secondary/10 md:hidden">
         <div className="mx-auto px-6 py-4 flex justify-between items-center">
-          <span className="font-mono text-primary font-bold">RT</span>
-          <button
-            className="text-foreground"
-            onClick={() => setIsOpen(!isOpen)}
-            aria-label="Toggle menu"
-          >
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <line x1="3" y1="12" x2="21" y2="12"></line>
-              <line x1="3" y1="6" x2="21" y2="6"></line>
-              <line x1="3" y1="18" x2="21" y2="18"></line>
-            </svg>
-          </button>
+          <span className="font-mono text-primary font-bold text-xl">RT</span>
+
+          <div className="flex items-center gap-4">
+            <Switchers />
+            <button
+              className="text-foreground p-1"
+              onClick={() => setIsOpen(!isOpen)}
+              aria-label="Toggle menu"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+              </svg>
+            </button>
+          </div>
         </div>
       </nav>
 
