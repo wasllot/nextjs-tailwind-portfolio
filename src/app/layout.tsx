@@ -30,11 +30,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="es" suppressHydrationWarning>
       <body className={`${inter.variable} ${mono.variable} antialiased bg-background text-foreground`}>
-        <MouseGlow />
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
-          <LanguageProvider>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
+            <MouseGlow />
+            <LanguageProvider>
             <div className="fixed top-6 right-6 z-50 hidden md:flex">
               <Switchers />
             </div>
