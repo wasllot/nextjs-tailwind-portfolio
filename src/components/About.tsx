@@ -6,14 +6,7 @@ import { useLanguage } from "./LanguageContext";
 export default function About() {
   const { t } = useLanguage();
 
-  const technologies = [
-    "TypeScript",
-    "Python/Django",
-    "Laravel",
-    "Vue.js",
-    "React/Next.js",
-    "PostgreSQL",
-  ];
+  /* technologies array removed */
 
   return (
     <section id="about" className="min-h-screen py-24 px-6">

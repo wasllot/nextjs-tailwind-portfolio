@@ -1,18 +1,18 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useLanguage } from "./LanguageContext";
 
 export default function Sidebar() {
   const { t, language } = useLanguage();
   const [activeSection, setActiveSection] = useState("about");
 
-  const sections = [
+  const sections = useMemo(() => [
     { id: "about", label: language === "en" ? "About" : "Sobre Mí" },
     { id: "experience", label: language === "en" ? "Experience" : "Experiencia" },
     { id: "projects", label: language === "en" ? "Projects" : "Proyectos" },
     { id: "writing", label: language === "en" ? "Writing" : "Escritos" },
-  ];
+  ], [language]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -32,7 +32,7 @@ export default function Sidebar() {
     });
 
     return () => observer.disconnect();
-  }, []);
+  }, [sections]);
 
   return (
     <aside className="md:fixed md:left-0 md:top-0 md:h-screen md:w-1/2 w-full relative flex flex-col justify-center bg-background/95 backdrop-blur-sm z-30 transition-colors duration-300 border-r border-white/5">

@@ -15,7 +15,7 @@ export default function Contact() {
           <p className="mb-4 font-mono text-primary">04. What's Next?</p>
           <h2 className="mb-6 text-4xl font-bold text-foreground sm:text-5xl">Get In Touch</h2>
           <p className="mb-12 text-secondary sm:text-lg">
-            I'm currently looking for new opportunities. Whether you have a question or just want to say hi, I'll try my best to get back to you!
+            I&apos;m currently looking for new opportunities. Whether you have a question or just want to say hi, I&apos;ll try my best to get back to you!
           </p>
           <a
             href="mailto:rei.vzl@gmail.com"

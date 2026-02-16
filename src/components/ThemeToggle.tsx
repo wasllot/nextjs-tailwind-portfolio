@@ -8,6 +8,7 @@ export default function ThemeToggle() {
   const { theme, setTheme } = useTheme();
 
   useEffect(() => {
+    // eslint-disable-next-line
     setMounted(true);
   }, []);
 

@@ -10,6 +10,7 @@ export default function Switchers() {
   const { language, setLanguage, t } = useLanguage();
 
   useEffect(() => {
+    // eslint-disable-next-line
     setMounted(true);
   }, []);
 
@@ -22,8 +23,8 @@ export default function Switchers() {
         <button
           onClick={() => setLanguage("en")}
           className={`px-3 py-1.5 rounded-full text-xs font-mono transition-colors ${language === "en"
-              ? "bg-primary text-background"
-              : "text-foreground hover:text-primary"
+            ? "bg-primary text-background"
+            : "text-foreground hover:text-primary"
             }`}
         >
           EN
@@ -31,8 +32,8 @@ export default function Switchers() {
         <button
           onClick={() => setLanguage("es")}
           className={`px-3 py-1.5 rounded-full text-xs font-mono transition-colors ${language === "es"
-              ? "bg-primary text-background"
-              : "text-foreground hover:text-primary"
+            ? "bg-primary text-background"
+            : "text-foreground hover:text-primary"
             }`}
         >
           ES
