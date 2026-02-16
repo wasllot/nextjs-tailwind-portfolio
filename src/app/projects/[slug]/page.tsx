@@ -153,6 +153,62 @@ const projects: Record<string, {
       "Scalability: adding new stores without modifying the core"
     ]
   },
+  "biolims": {
+    title: "BioLIMS - Sistema de Gestión de Laboratorio (Offline-First)",
+    titleEn: "BioLIMS - Offline-First Laboratory Management System",
+    description: "Sistema de información de laboratorio (LIS) de alto rendimiento diseñado para garantizar la continuidad operativa en entornos con conectividad inestable.",
+    descriptionEn: "High-performance laboratory information system (LIS) designed to guarantee operational continuity in environments with unstable connectivity.",
+    client: "SaaS / HealthTech",
+    clientEn: "SaaS / HealthTech",
+    year: "2026",
+    technologies: ["Django REST Framework", "React", "Dexie.js", "PostgreSQL", "Zustand", "Docker", "Nginx"],
+    link: "",
+    image: "/lab-system-architecture.webp",
+    challenge: [
+      "Conectividad Intermitente: La necesidad crítica de procesar órdenes y tomas de muestras sin depender de una conexión a internet estable",
+      "Complejidad de Dominio: Manejo de un catálogo jerárquico profundo (Perfiles → Exámenes → Valores de Referencia) con reglas de precios dinámicas",
+      "Integridad de Datos: Garantizar que no existan conflictos al sincronizar datos creados localmente con el servidor central",
+      "Escalabilidad del Código: Evitar los antipatrones comunes de Django ('Fat Models') al crecer la lógica de negocio"
+    ],
+    challengeEn: [
+      "Intermittent Connectivity: The critical need to process orders and sample collections without depending on a stable internet connection",
+      "Domain Complexity: Handling a deep hierarchical catalog (Profiles → Tests → Reference Values) with dynamic pricing rules",
+      "Data Integrity: Ensuring no conflicts when synchronizing locally created data with the central server",
+      "Code Scalability: Avoiding common Django anti-patterns ('Fat Models') as business logic grows"
+    ],
+    solution: [
+      "Estrategia Offline-First: Implementación de Dexie.js (IndexedDB) en el cliente para almacenar catálogos y órdenes, sincronizando con el backend solo cuando hay conexión",
+      "Arquitectura en Capas (DDD Simplificado): Separación del backend en Interface Layer, Service Layer y Data Access Layer",
+      "Gestión de Estado Híbrida: Uso de Zustand para estado global ligero y React Query para el estado del servidor y caché",
+      "Sync Engine: Módulo dedicado en el frontend que pone en cola las mutaciones offline y las procesa secuencialmente al recuperar la red"
+    ],
+    solutionEn: [
+      "Offline-First Strategy: Implementation of Dexie.js (IndexedDB) on the client to store catalogs and orders, syncing with the backend only when there is a connection",
+      "Layered Architecture (Simplified DDD): Separation of backend into Interface Layer, Service Layer, and Data Access Layer",
+      "Hybrid State Management: Use of Zustand for lightweight global state and React Query for server state and cache",
+      "Sync Engine: Dedicated module in the frontend that queues offline mutations and processes them sequentially when the network is restored"
+    ],
+    architecture: [
+      "Service-Repository Pattern: Desacopla la lógica de negocio del framework HTTP y del ORM, facilitando los tests unitarios y la flexibilidad",
+      "Modelo de Datos Jerárquico: Estructura optimizada para la composición comercial de exámenes (Perfiles) y la validación clínica (Rangos de referencia por edad/sexo)",
+      "Validación Centralizada: Los Services actúan como orquestadores que validan reglas de negocio cruzadas antes de persistir datos"
+    ],
+    architectureEn: [
+      "Service-Repository Pattern: Decouples business logic from the HTTP framework and ORM, facilitating unit tests and flexibility",
+      "Hierarchical Data Model: Optimized structure for commercial composition of tests (Profiles) and clinical validation (Reference ranges by age/sex)",
+      "Centralized Validation: Services act as orchestrators that validate cross-business rules before persisting data"
+    ],
+    results: [
+      "100% de Continuidad Operativa: El personal puede registrar pacientes y órdenes sin interrupciones, incluso durante caídas de red",
+      "Mantenibilidad: La arquitectura en capas permite modificar reglas de negocio complejas sin tocar las vistas o la base de datos",
+      "Experiencia de Usuario (UX) Instantánea: La navegación y búsqueda en el catálogo es inmediata gracias a la carga local de datos"
+    ],
+    resultsEn: [
+      "100% Operational Continuity: Staff can register patients and orders without interruptions, even during network outages",
+      "Maintainability: The layered architecture allows modifying complex business rules without touching views or database",
+      "Instant User Experience (UX): Navigation and catalog search is immediate thanks to local data loading"
+    ]
+  },
 };
 
 export default function ProjectDetail() {

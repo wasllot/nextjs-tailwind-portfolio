@@ -17,6 +17,16 @@ const projects = [
   },
   {
     id: 2,
+    slug: "biolims",
+    title: "BioLIMS - Sistema de Gestión de Laboratorio Offline-First",
+    titleEn: "BioLIMS - Offline-First Laboratory Management System",
+    descriptionKey: "project-3",
+    technologies: ["Django REST Framework", "React", "Dexie.js", "PostgreSQL", "Zustand", "Docker"],
+    link: "",
+    external: false,
+  },
+  {
+    id: 3,
     slug: "ecosistema-dlds",
     title: "Ecosistema DLDS - Middleware Event-Driven",
     titleEn: "DLDS Ecosystem - Event-Driven Middleware",
@@ -31,10 +41,12 @@ const projectDescriptions = {
   en: {
     "project-1": "Desktop application for automated job search using AI. Hybrid architecture with Electron, Next.js, Python/FastAPI and Gemini AI for intelligent filtering.",
     "project-2": "Event-driven middleware ecosystem connecting a wholesale distributor with multiple retail stores. Real-time inventory synchronization, automated order replication and drop-shipping flow.",
+    "project-3": "Comprehensive laboratory management system designed with an Offline-First strategy. Modular backend architecture based on simplified DDD to handle complex business logic and robust bidirectional synchronization.",
   },
   es: {
     "project-1": "Aplicación de escritorio para búsqueda de empleo automatizada con IA. Arquitectura híbrida con Electron, Next.js, Python/FastAPI y Gemini AI para filtrado inteligente.",
     "project-2": "Ecosistema de middleware basado en eventos que conecta un mayorista con múltiples tiendas retail. Sincronización de inventario en tiempo real, replicación automatizada de pedidos y flujo de drop-shipping.",
+    "project-3": "Plataforma integral para laboratorios clínicos diseñada con una estrategia Offline-First. Arquitectura backend modular basada en DDD simplificado para manejar lógica de negocio compleja y sincronización bidireccional robusta.",
   },
 };
 
