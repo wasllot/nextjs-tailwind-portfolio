@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo } from "react";
 import { useLanguage } from "./LanguageContext";
+import SystemStatusWidget from "./SystemStatusWidget";
 
 export default function Sidebar() {
   const { t, language } = useLanguage();
@@ -97,6 +98,16 @@ export default function Sidebar() {
             </a>
           ))}
         </div>
+
+        {/* System Status - Mini version in sidebar */}
+        <div className="mt-8 md:hidden">
+          <SystemStatusWidget />
+        </div>
+      </div>
+
+      {/* System Status - Desktop sidebar (absolute positioned) */}
+      <div className="hidden md:block absolute bottom-8 left-6 lg:left-24 z-20 w-auto">
+        <SystemStatusWidget />
       </div>
     </aside>
   );
