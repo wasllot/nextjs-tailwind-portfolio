@@ -36,3 +36,22 @@ jobs:
           name: build-artifacts
           path: .next
           retention-days: 7
+
+  deploy:
+    name: Deploy via SSH
+    needs: quality
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST }}
+          username: root
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd /var/www/html
+            git pull origin main
+            npm install
+            npm run build
+            pm2 restart portfolio
