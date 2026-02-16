@@ -89,9 +89,23 @@
 
 ## Continuous Deployment
 
+This project uses **GitHub Actions** to handle deployments.
+
+### Setup Required:
+
+1. **Generate Digital Ocean Token**:
+   - Go to [API Tokens](https://cloud.digitalocean.com/account/api/tokens)
+   - Generate new token with read/write access
+
+2. **Add Secret to GitHub**:
+   - Go to Repo Settings → Secrets and variables → Actions
+   - Create new Repository Secret
+   - Name: `DIGITALOCEAN_ACCESS_TOKEN`
+   - Value: Your generated token
+
 Once set up, every push to `main` will:
 1. Trigger GitHub Actions CI (lint + build check)
-2. Auto-deploy to Digital Ocean if CI passes
+2. Deploy directly to Digital Ocean App Platform using `digitalocean/app_action`
 3. Live in 3-5 minutes
 
 ## Monitoring & Logs
