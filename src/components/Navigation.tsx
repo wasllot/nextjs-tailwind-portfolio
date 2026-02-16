@@ -3,9 +3,15 @@
 import { useState } from "react";
 import Image from "next/image";
 import Switchers from "./Switchers";
+import { useLanguage } from "./LanguageContext";
+import { useTheme } from "next-themes";
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
+  const { t } = useLanguage();
+  const { theme } = useTheme();
+
+  const logoSrc = theme === "dark" ? "/logo-light.webp" : "/logo.webp";
 
   return (
     <>
@@ -13,7 +19,7 @@ export default function Navigation() {
       <nav className="fixed top-0 left-0 right-0 bg-background/95 backdrop-blur-sm z-40 border-b border-secondary/10 md:hidden">
         <div className="mx-auto px-6 py-4 flex justify-between items-center">
           <Image
-            src="/logo.webp"
+            src={logoSrc}
             alt="Logo"
             width={40}
             height={40}
@@ -42,10 +48,10 @@ export default function Navigation() {
       {isOpen && (
         <div className="md:hidden fixed inset-0 top-[60px] bg-background z-30 px-6 py-8">
           <ul className="flex flex-col gap-6 text-xl font-mono">
-            <li><a href="#about" className="text-primary" onClick={() => setIsOpen(false)}>About</a></li>
-            <li><a href="#experience" className="text-primary" onClick={() => setIsOpen(false)}>Experience</a></li>
-            <li><a href="#projects" className="text-primary" onClick={() => setIsOpen(false)}>Projects</a></li>
-            <li><a href="#writing" className="text-primary" onClick={() => setIsOpen(false)}>Writing</a></li>
+            <li><a href="#about" className="text-primary" onClick={() => setIsOpen(false)}>{t("nav.about")}</a></li>
+            <li><a href="#experience" className="text-primary" onClick={() => setIsOpen(false)}>{t("nav.experience")}</a></li>
+            <li><a href="#projects" className="text-primary" onClick={() => setIsOpen(false)}>{t("nav.projects")}</a></li>
+            <li><a href="#writing" className="text-primary" onClick={() => setIsOpen(false)}>{t("writing.title")}</a></li>
           </ul>
         </div>
       )}
