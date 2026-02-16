@@ -11,7 +11,7 @@ export default function Navigation() {
   const { t } = useLanguage();
   const { theme } = useTheme();
 
-  const logoSrc = theme === "dark" ? "/logo-light.webp" : "/logo.webp";
+  const logoSrc = !theme || theme === "dark" ? "/logo-light.webp" : "/logo.webp";
 
   return (
     <>
