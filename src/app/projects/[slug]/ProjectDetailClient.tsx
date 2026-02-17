@@ -7,6 +7,7 @@ import { motion } from "framer-motion";
 import { useLanguage } from "@/components/LanguageContext";
 import { notFound } from "next/navigation";
 import { projects } from "./data";
+import { Github } from "lucide-react";
 
 export default function ProjectDetailClient() {
   const params = useParams();
@@ -143,7 +144,7 @@ export default function ProjectDetailClient() {
             </ul>
           </div>
 
-          <div className="flex gap-4">
+          <div className="flex gap-4 flex-wrap">
             {project.link && (
               <a
                 href={project.link}
@@ -152,6 +153,17 @@ export default function ProjectDetailClient() {
                 className="inline-flex items-center px-6 py-3 bg-primary text-white font-semibold rounded-lg hover:bg-primary/90 transition-colors hover-glow"
               >
                 {language === "en" ? "Visit Website" : "Visitar Sitio"}
+              </a>
+            )}
+            {project.repo && (
+              <a
+                href={project.repo}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-3 border border-primary text-primary font-semibold rounded-lg hover:bg-primary/10 transition-colors"
+              >
+                <Github className="w-5 h-5" />
+                {language === "en" ? "View Code" : "Ver Código"}
               </a>
             )}
             <Link

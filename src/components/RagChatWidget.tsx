@@ -85,7 +85,9 @@ export default function RagChatWidget() {
     placeholder: language === "es" ? "Pregunta sobre mi experiencia..." : "Ask about my experience...",
     send: language === "es" ? "Enviar" : "Send",
     thinking: language === "es" ? "Pensando..." : "Thinking...",
-    error: language === "es" ? "Error al conectar" : "Connection error",
+    error: language === "es" 
+      ? "Lo siento, el servicio de chat no está disponible. Reinaldo ya está trabajando para solucionarlo. Mientras tanto, puedes escribirle directamente: https://wa.me/+584121883268" 
+      : "Sorry, the chat service is currently unavailable. Reinaldo is already working to fix it. In the meantime, you can message him directly: https://wa.me/+584121883268",
     close: language === "es" ? "Cerrar" : "Close",
     welcomeTitle: language === "es" ? "¡Hola! Soy tu asistente de IA" : "Hi! I'm your AI Assistant",
     welcomeText: language === "es" ? "Estoy entrenado con toda la información profesional de Reinaldo. ¿En qué puedo ayudarte?" : "I'm trained on Reinaldo's professional background. How can I help you?",

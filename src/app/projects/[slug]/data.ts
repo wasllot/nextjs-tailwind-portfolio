@@ -8,6 +8,7 @@ export const projects: Record<string, {
   year: string;
   technologies: string[];
   link: string;
+  repo?: string;
   image?: string;
   challenge: string[];
   challengeEn: string[];
@@ -28,6 +29,7 @@ export const projects: Record<string, {
     year: "2026",
     technologies: ["Laravel 11", "FastAPI", "Docker Compose", "Traefik", "PostgreSQL (pgvector)", "Redis", "Playwright", "MinIO", "Google Gemini"],
     link: "",
+    repo: "https://github.com/wasllot/AI-Scrape-Microservices",
     image: "/microservices-api.webp",
     challenge: [
       "La Brecha Tecnológica: Necesidad de utilizar las mejores herramientas para cada tarea (Python para IA/Scraping, PHP para lógica de negocio/Auth) sin crear un 'monolito frankenstein'",
@@ -82,6 +84,7 @@ export const projects: Record<string, {
     year: "2024",
     technologies: ["Electron", "Next.js", "Python", "FastAPI", "Gemini AI", "SQLite", "Zustand", "JobSpy", "APScheduler"],
     link: "",
+    repo: "https://github.com/wasllot/Job-hunter-scrapper-service-electron.git",
     image: "/job-hunter-seeker.webp",
     challenge: [
       "La búsqueda de empleo moderna es ineficiente: revisar múltiples portales (LinkedIn, Indeed, Glassdoor) manualmente",
@@ -146,6 +149,7 @@ export const projects: Record<string, {
     year: "2026",
     technologies: ["Django REST Framework", "React", "Dexie.js", "PostgreSQL", "Zustand", "Docker", "Nginx"],
     link: "",
+    repo: "https://github.com/wasllot/LIMS---Laboratory-Information-Management-System",
     image: "/lab-system-architecture.webp",
     challenge: [
       "Conectividad Intermitente: La necesidad crítica de procesar órdenes y tomas de muestras sin depender de una conexión a internet estable",
@@ -202,6 +206,7 @@ export const projects: Record<string, {
     year: "2023-2024",
     technologies: ["Laravel", "Redis", "PrestaShop", "Webhooks", "MySQL", "Docker", "Laravel Horizon"],
     link: "https://www.dlds.cl",
+    repo: "https://github.com/wasllot/event-driven-ecommerce-sync-api",
     image: "/event-driven-ecommerce-sync.webp",
     challenge: [
       "Modelo híbrido complejo: un mayorista central (DLDS) y múltiples retailers satélite",
