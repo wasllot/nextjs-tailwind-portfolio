@@ -164,12 +164,12 @@ export default function RagChatWidget() {
   };
 
   return (
-    <div className="relative z-50">
+    <div className="relative">
       {/* Toggle Button */}
       <div className={`transition-all duration-300 transform ${isOpen ? 'scale-0 opacity-0' : 'scale-100 opacity-100'}`}>
         <button
           onClick={() => setIsOpen(true)}
-          className={`fixed bottom-6 right-6 p-4 rounded-full shadow-lg hover:scale-110 transition-all duration-300 group z-50 ${
+          className={`p-4 rounded-full shadow-lg hover:scale-110 transition-all duration-300 group ${
             isDark
               ? 'bg-[#64ffda] text-slate-900 shadow-[#64ffda]/30 hover:shadow-[#64ffda]/50'
               : 'bg-[#0d9488] text-white shadow-teal-600/30 hover:shadow-teal-600/50'

@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { LanguageProvider } from "@/components/LanguageContext";
 import Switchers from "@/components/Switchers";
 import MouseGlow from "@/components/MouseGlow";
+import RagChatWidget from "@/components/RagChatWidget";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -37,6 +38,9 @@ export default function RootLayout({
             <LanguageProvider>
             <div className="fixed top-6 right-6 z-50 hidden md:flex">
               <Switchers />
+            </div>
+            <div className="fixed bottom-6 right-6 z-50 flex flex-col-reverse gap-3 items-end">
+              <RagChatWidget />
             </div>
             {children}
           </LanguageProvider>
