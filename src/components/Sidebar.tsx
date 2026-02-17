@@ -3,6 +3,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { useLanguage } from "./LanguageContext";
 import SystemStatusWidget from "./SystemStatusWidget";
+import RagChatWidget from "./RagChatWidget";
 
 export default function Sidebar() {
   const { t, language } = useLanguage();
@@ -102,12 +103,18 @@ export default function Sidebar() {
         {/* System Status - Mini version in sidebar */}
         <div className="mt-8 md:hidden">
           <SystemStatusWidget />
+          <div className="mt-4">
+            <RagChatWidget />
+          </div>
         </div>
       </div>
 
       {/* System Status - Desktop sidebar (absolute positioned) */}
       <div className="hidden md:block absolute bottom-8 left-6 lg:left-24 z-20 w-auto">
         <SystemStatusWidget />
+        <div className="mt-4">
+          <RagChatWidget />
+        </div>
       </div>
     </aside>
   );
