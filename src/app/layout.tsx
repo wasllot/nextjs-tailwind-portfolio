@@ -18,10 +18,62 @@ const mono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Reinaldo Tineo | Full Stack Developer",
-  description: "Full Stack Developer specialized in Laravel, Python, TypeScript, Vue.js, and React.",
+  metadataBase: new URL("https://reinaldotineo.online"),
+  title: {
+    default: "Reinaldo Tineo | Full Stack Developer & Software Architect",
+    template: "%s | Reinaldo Tineo",
+  },
+  description: "Full Stack Developer & Software Architect especializado en Laravel, Python, TypeScript, Vue.js y React. Construyo arquitecturas de microservicios, sistemas de IA y soluciones escalables.",
+  keywords: [
+    "Full Stack Developer",
+    "Software Architect",
+    "Laravel Developer",
+    "Python Developer",
+    "TypeScript Developer",
+    "Vue.js Developer",
+    "React Developer",
+    "Microservices Architecture",
+    "AI Integration",
+    "RAG API",
+    "Backend Developer",
+    "Freelance Developer",
+    "Remote Developer",
+    "Venezuela",
+  ],
+  authors: [{ name: "Reinaldo Tineo", url: "https://reinaldotineo.online" }],
+  creator: "Reinaldo Tineo",
+  publisher: "Reinaldo Tineo",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  openGraph: {
+    type: "website",
+    locale: "es_ES",
+    url: "https://reinaldotineo.online",
+    siteName: "Reinaldo Tineo Portfolio",
+    title: "Reinaldo Tineo | Full Stack Developer & Software Architect",
+    description: "Full Stack Developer & Software Architect especializado en Laravel, Python, TypeScript, Vue.js y React. Construyo arquitecturas de microservicios, sistemas de IA y soluciones escalables.",
+  },
+  twitter: {
+    card: "summary",
+    title: "Reinaldo Tineo | Full Stack Developer & Software Architect",
+    description: "Full Stack Developer & Software Architect especializado en Laravel, Python, TypeScript, Vue.js y React.",
+    creator: "@reinaldotineo",
+  },
+  verification: {
+    google: "google-site-verification-code",
+  },
   icons: {
     icon: "/favicon.ico",
+    apple: "/favicon.ico",
   },
 };
 

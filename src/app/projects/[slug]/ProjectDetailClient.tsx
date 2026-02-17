@@ -59,7 +59,7 @@ export default function ProjectDetailClient() {
             <div className="relative w-full h-auto mb-8 rounded-lg overflow-hidden bg-muted">
               <Image
                 src={project.image}
-                alt={title}
+                alt={`${title} - ${language === "en" ? "Project Architecture and Screenshot" : "Arquitectura y Captura del Proyecto"}`}
                 width={1200}
                 height={600}
                 className="w-full h-auto"

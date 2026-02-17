@@ -20,7 +20,7 @@ export default function Navigation() {
         <div className="mx-auto px-6 py-4 flex justify-between items-center">
           <Image
             src={logoSrc}
-            alt="Logo"
+            alt="Reinaldo Tineo - Full Stack Developer Logo"
             width={40}
             height={40}
             className="w-10 h-10 object-contain"
