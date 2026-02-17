@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { MessageCircle, X, Send, Bot, User, ExternalLink, ChevronDown, ChevronUp } from "lucide-react";
+import { MessageCircle, Send, Bot, X, Sparkles } from "lucide-react";
 import { useLanguage } from "./LanguageContext";
+import { useTheme } from "next-themes";
 
 interface Message {
   id: string;
@@ -19,23 +20,70 @@ interface ChatResponse {
 
 const API_URL = "https://api.reinaldotineo.online/ai/chat";
 
+const playSendSound = () => {
+  try {
+    const audioContext = new (window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext)();
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+
+    oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+    oscillator.frequency.exponentialRampToValueAtTime(400, audioContext.currentTime + 0.1);
+    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+
+    oscillator.start(audioContext.currentTime);
+    oscillator.stop(audioContext.currentTime + 0.1);
+  } catch { }
+};
+
+const playReceiveSound = () => {
+  try {
+    const audioContext = new (window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext)();
+
+    const oscillator1 = audioContext.createOscillator();
+    const oscillator2 = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+
+    oscillator1.connect(gainNode);
+    oscillator2.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+
+    oscillator1.frequency.setValueAtTime(600, audioContext.currentTime);
+    oscillator2.frequency.setValueAtTime(800, audioContext.currentTime + 0.1);
+
+    gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
+
+    oscillator1.start(audioContext.currentTime);
+    oscillator1.stop(audioContext.currentTime + 0.1);
+    oscillator2.start(audioContext.currentTime + 0.1);
+    oscillator2.stop(audioContext.currentTime + 0.2);
+  } catch { }
+};
+
 export default function RagChatWidget() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [conversationId, setConversationId] = useState<string | undefined>();
-  const [showSources, setShowSources] = useState<Record<string, boolean>>({});
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { t, language } = useLanguage();
+  const { theme } = useTheme();
+  const isDark = theme === "dark";
 
   const labels = {
     toggle: language === "es" ? "Chat IA" : "AI Chat",
     placeholder: language === "es" ? "Pregunta sobre mi experiencia..." : "Ask about my experience...",
     send: language === "es" ? "Enviar" : "Send",
-    sources: language === "es" ? "Fuentes" : "Sources",
     thinking: language === "es" ? "Pensando..." : "Thinking...",
-    error: language === "es" ? "Error al conectar con el chat" : "Error connecting to chat",
+    error: language === "es" ? "Error al conectar" : "Connection error",
+    close: language === "es" ? "Cerrar" : "Close",
+    welcomeTitle: language === "es" ? "¡Hola! Soy tu asistente de IA" : "Hi! I'm your AI Assistant",
+    welcomeText: language === "es" ? "Estoy entrenado con toda la información profesional de Reinaldo. ¿En qué puedo ayudarte?" : "I'm trained on Reinaldo's professional background. How can I help you?",
   };
 
   useEffect(() => {
@@ -43,6 +91,13 @@ export default function RagChatWidget() {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [messages]);
+
+  useEffect(() => {
+    const lastMessage = messages[messages.length - 1];
+    if (lastMessage && lastMessage.role === "assistant" && !isLoading) {
+      playReceiveSound();
+    }
+  }, [messages, isLoading]);
 
   const sendMessage = async () => {
     if (!input.trim() || isLoading) return;
@@ -93,141 +148,170 @@ export default function RagChatWidget() {
     }
   };
 
-  const toggleSources = (messageId: string) => {
-    setShowSources((prev) => ({ ...prev, [messageId]: !prev[messageId] }));
-  };
-
-  const handleKeyPress = (e: React.KeyboardEvent) => {
+  const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
-      sendMessage();
+      if (input.trim() && !isLoading) {
+        playSendSound();
+        sendMessage();
+      }
     }
   };
 
   return (
-    <div className="relative">
-      <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-gray-100/50 dark:hover:bg-white/5 transition-colors group w-full"
-        aria-label={labels.toggle}
+    <div className="relative z-50">
+      {/* Toggle Button */}
+      <div className={`transition-all duration-300 transform ${isOpen ? 'scale-0 opacity-0' : 'scale-100 opacity-100'}`}>
+        <button
+          onClick={() => setIsOpen(true)}
+          className={`fixed bottom-6 right-6 p-4 rounded-full shadow-lg hover:scale-110 transition-all duration-300 group z-50 ${
+            isDark
+              ? 'bg-gradient-to-tr from-cyan-500 to-blue-600 text-white shadow-cyan-500/40 hover:shadow-cyan-500/50'
+              : 'bg-gradient-to-tr from-violet-600 to-indigo-600 text-white shadow-violet-500/30 hover:shadow-violet-500/50'
+          }`}
+          aria-label={labels.toggle}
+        >
+          <MessageCircle className="w-6 h-6 group-hover:animate-pulse" />
+          <span className={`absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full border-2 ${isDark ? 'border-slate-900' : 'border-white'}`}></span>
+        </button>
+      </div>
+
+      {/* Chat Window */}
+      <div
+        className={`
+          fixed inset-0 md:inset-auto md:bottom-6 md:right-6 md:left-auto 
+          md:w-[400px] md:h-[600px] md:max-h-[calc(100vh-8rem)]
+          ${isDark ? 'bg-slate-950/95' : 'bg-white/95'} backdrop-blur-xl 
+          ${isDark ? 'border-slate-800' : 'border-gray-200'} 
+          shadow-2xl md:rounded-2xl 
+          flex flex-col overflow-hidden transition-all duration-300 ease-out origin-bottom-right
+          ${isOpen ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-10 pointer-events-none'}
+        `}
       >
-        <MessageCircle className="w-4 h-4 text-primary" />
-        <span className="text-sm font-medium text-gray-700 dark:text-slate-200 group-hover:text-gray-900 dark:group-hover:text-white transition-colors">
-          {labels.toggle}
-        </span>
-      </button>
-
-      {isOpen && (
-        <div className="absolute bottom-full left-0 mb-3 w-80 md:w-96 rounded-xl bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl border border-gray-200 dark:border-white/10 shadow-xl dark:shadow-2xl overflow-hidden z-50">
-          <div className="px-4 py-3 border-b border-gray-100 dark:border-white/5 flex justify-between items-center bg-gray-50/50 dark:bg-white/5">
-            <span className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-              {labels.toggle}
-            </span>
-            <button
-              onClick={() => setIsOpen(false)}
-              className="p-1 rounded hover:bg-gray-200 dark:hover:bg-white/10 transition-colors text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
-            >
-              <ChevronUp className="w-4 h-4" />
-            </button>
-          </div>
-
-          <div className="h-80 overflow-y-auto p-4 space-y-4">
-            {messages.length === 0 && (
-              <div className="text-center text-gray-500 dark:text-gray-400 text-sm py-8">
-                <Bot className="w-12 h-12 mx-auto mb-3 opacity-50" />
-                <p>{labels.placeholder}</p>
+        {/* Header */}
+        <div className={`px-4 py-3 border-b ${isDark ? 'border-slate-900 bg-slate-950/50' : 'border-gray-100 bg-white/80'} flex justify-between items-center backdrop-blur-sm sticky top-0 z-10`}>
+          <div className="flex items-center gap-3">
+            <div className={`p-2 rounded-xl ${isDark ? 'bg-slate-900' : 'bg-violet-100'}`}>
+              <Sparkles className={`w-5 h-5 ${isDark ? 'text-cyan-400' : 'text-violet-600'}`} />
+            </div>
+            <div>
+              <h3 className={`text-sm font-semibold ${isDark ? 'text-slate-100' : 'text-gray-800'}`}>
+                {labels.toggle}
+              </h3>
+              <div className="flex items-center gap-1.5">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 bg-emerald-500"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                </span>
+                <span className={`text-[10px] ${isDark ? 'text-slate-400' : 'text-gray-500'} font-medium`}>Online</span>
               </div>
-            )}
-            {messages.map((msg) => (
-              <div key={msg.id} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
-                <div
-                  className={`max-w-[85%] rounded-lg px-3 py-2 ${
-                    msg.role === "user"
-                      ? "bg-primary text-white"
-                      : "bg-gray-100 dark:bg-white/10 text-gray-800 dark:text-gray-100"
+            </div>
+          </div>
+          <button
+            onClick={() => setIsOpen(false)}
+            className={`p-2 rounded-lg transition-colors ${isDark ? 'hover:bg-slate-800 text-slate-400' : 'hover:bg-gray-100 text-gray-500'}`}
+            aria-label={labels.close}
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+
+        {/* Messages */}
+        <div className={`flex-1 overflow-y-auto p-4 space-y-6 ${isDark ? 'bg-slate-950/50' : 'bg-slate-50/50'} scroll-smooth`}>
+          {messages.length === 0 && (
+            <div className="flex flex-col items-center justify-center h-full text-center px-6">
+              <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-4 transition-transform hover:scale-105 duration-300 ${isDark ? 'bg-slate-900' : 'bg-violet-100'}`}>
+                <Bot className={`w-8 h-8 ${isDark ? 'text-cyan-400' : 'text-violet-600'}`} />
+              </div>
+              <h4 className={`text-base font-semibold mb-2 ${isDark ? 'text-slate-100' : 'text-gray-800'}`}>
+                {labels.welcomeTitle}
+              </h4>
+              <p className={`text-sm leading-relaxed max-w-[260px] ${isDark ? 'text-slate-400' : 'text-gray-500'}`}>
+                {labels.welcomeText}
+              </p>
+            </div>
+          )}
+
+          {messages.map((msg) => (
+            <div key={msg.id} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
+              <div
+                className={`max-w-[85%] rounded-2xl px-5 py-3 text-sm leading-relaxed shadow-sm ${
+                  msg.role === "user"
+                    ? isDark 
+                      ? "bg-gradient-to-r from-cyan-600 to-blue-600 text-white rounded-br-none shadow-md"
+                      : "bg-gradient-to-r from-violet-600 to-indigo-600 text-white rounded-br-none shadow-md"
+                    : isDark
+                      ? "bg-slate-900 text-slate-200 border border-slate-800 rounded-bl-none shadow-sm"
+                      : "bg-white text-gray-700 border border-gray-100 rounded-bl-none shadow-sm"
                   }`}
-                >
-                  <div className="flex items-start gap-2">
-                    {msg.role === "assistant" && <Bot className="w-4 h-4 mt-0.5 flex-shrink-0" />}
-                    {msg.role === "user" && <User className="w-4 h-4 mt-0.5 flex-shrink-0" />}
-                    <div className="text-sm whitespace-pre-wrap">{msg.content}</div>
+              >
+                {msg.role === "assistant" && (
+                  <div className="flex items-center gap-2 mb-1.5 opacity-60">
+                    <Bot className="w-3 h-3" />
+                    <span className="text-[10px] font-semibold uppercase tracking-wider">AI Assistant</span>
                   </div>
-                  {msg.role === "assistant" && msg.sources && msg.sources.length > 0 && (
-                    <div className="mt-2 pt-2 border-t border-gray-200 dark:border-white/10">
-                      <button
-                        onClick={() => toggleSources(msg.id)}
-                        className="text-xs flex items-center gap-1 text-primary hover:underline"
-                      >
-                        {showSources[msg.id] ? (
-                          <ChevronUp className="w-3 h-3" />
-                        ) : (
-                          <ChevronDown className="w-3 h-3" />
-                        )}
-                        {labels.sources} ({msg.sources.length})
-                      </button>
-                      {showSources[msg.id] && (
-                        <div className="mt-2 space-y-2">
-                          {msg.sources.map((source, idx) => (
-                            <div
-                              key={idx}
-                              className="text-xs p-2 rounded bg-gray-50 dark:bg-white/5 text-gray-600 dark:text-gray-300"
-                            >
-                              <p className="line-clamp-3">{source.content}</p>
-                              {source.metadata?.url && (
-                                <a
-                                  href={source.metadata.url as string}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="flex items-center gap-1 mt-1 text-primary hover:underline"
-                                >
-                                  <ExternalLink className="w-3 h-3" />
-                                  Ver fuente
-                                </a>
-                              )}
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                    </div>
-                  )}
-                </div>
+                )}
+                <div className="whitespace-pre-wrap">{msg.content}</div>
               </div>
-            ))}
-            {isLoading && (
-              <div className="flex justify-start">
-                <div className="bg-gray-100 dark:bg-white/10 rounded-lg px-3 py-2">
-                  <div className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
-                    <Bot className="w-4 h-4 animate-pulse" />
-                    {labels.thinking}
-                  </div>
-                </div>
-              </div>
-            )}
-            <div ref={messagesEndRef} />
-          </div>
+            </div>
+          ))}
 
-          <div className="p-3 border-t border-gray-100 dark:border-white/5">
-            <div className="flex gap-2">
+          {isLoading && (
+            <div className="flex justify-start">
+              <div className={`rounded-2xl rounded-bl-none px-5 py-4 border shadow-sm flex items-center gap-3 ${isDark ? 'bg-slate-900 border-slate-800' : 'bg-white border-gray-100'}`}>
+                <div className="flex gap-1">
+                  <span className={`w-1.5 h-1.5 rounded-full animate-bounce ${isDark ? 'bg-cyan-400' : 'bg-violet-500'}`} style={{ animationDelay: '0ms' }} />
+                  <span className={`w-1.5 h-1.5 rounded-full animate-bounce ${isDark ? 'bg-cyan-400' : 'bg-violet-500'}`} style={{ animationDelay: '150ms' }} />
+                  <span className={`w-1.5 h-1.5 rounded-full animate-bounce ${isDark ? 'bg-cyan-400' : 'bg-violet-500'}`} style={{ animationDelay: '300ms' }} />
+                </div>
+                <span className={`text-xs font-medium ${isDark ? 'text-slate-500' : 'text-gray-500'}`}>{labels.thinking}</span>
+              </div>
+            </div>
+          )}
+          <div ref={messagesEndRef} />
+        </div>
+
+        {/* Input Area */}
+        <div className={`p-4 border-t ${isDark ? 'bg-slate-950 border-slate-900' : 'bg-white border-gray-100'}`}>
+          <div className="flex gap-2 items-end">
+            <div className="flex-1 relative">
               <input
                 type="text"
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                onKeyPress={handleKeyPress}
+                onKeyDown={handleKeyDown}
                 placeholder={labels.placeholder}
-                className="flex-1 px-3 py-2 text-sm rounded-lg border border-gray-200 dark:border-white/10 bg-white dark:bg-white/5 text-gray-800 dark:text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/50"
+                className={`w-full pl-4 pr-10 py-3 text-sm rounded-xl border transition-all focus:outline-none focus:ring-2 focus:ring-primary/20 ${
+                  isDark 
+                    ? 'border-slate-800 bg-slate-900 text-slate-100 placeholder:text-slate-500 focus:bg-slate-900'
+                    : 'border-gray-200 bg-gray-50 text-gray-800 placeholder:text-gray-400 focus:bg-white'
+                }`}
                 disabled={isLoading}
               />
-              <button
-                onClick={sendMessage}
-                disabled={!input.trim() || isLoading}
-                className="p-2 rounded-lg bg-primary text-white hover:bg-primary/90 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-              >
-                <Send className="w-4 h-4" />
-              </button>
             </div>
+            <button
+              onClick={() => {
+                playSendSound();
+                sendMessage();
+              }}
+              disabled={!input.trim() || isLoading}
+              className={`p-3 rounded-xl shadow-lg transition-all transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed ${
+                isDark 
+                  ? 'bg-cyan-500 text-slate-900 shadow-cyan-500/20 hover:bg-cyan-400 hover:shadow-cyan-500/40'
+                  : 'bg-violet-600 text-white shadow-violet-500/30 hover:bg-violet-500 hover:shadow-xl hover:shadow-violet-500/30'
+              }`}
+            >
+              <Send className="w-4 h-4" />
+            </button>
+          </div>
+          <div className="text-center mt-2">
+            <span className={`text-[10px] ${isDark ? 'text-slate-600' : 'text-gray-400'}`}>
+              AI powered by Gemini • Reinaldo Tineo Portfolio
+            </span>
           </div>
         </div>
-      )}
+
+      </div>
     </div>
   );
 }
