@@ -7,6 +7,16 @@ import Link from "next/link";
 const projects = [
   {
     id: 1,
+    slug: "microservices-core-rag",
+    title: "SaaS Microservices Core & RAG API",
+    titleEn: "SaaS Microservices Core & RAG API",
+    descriptionKey: "project-microservices",
+    technologies: ["Laravel 11", "FastAPI", "Docker", "Traefik", "pgvector", "Redis", "Google Gemini"],
+    link: "",
+    external: false,
+  },
+  {
+    id: 2,
     slug: "jobhunter-ai",
     title: "JobHunter AI - Automatización de Búsqueda de Empleo",
     titleEn: "JobHunter AI - Automated Job Search",
@@ -16,7 +26,7 @@ const projects = [
     external: false,
   },
   {
-    id: 2,
+    id: 3,
     slug: "biolims",
     title: "BioLIMS - Sistema de Gestión de Laboratorio Offline-First",
     titleEn: "BioLIMS - Offline-First Laboratory Management System",
@@ -26,7 +36,7 @@ const projects = [
     external: false,
   },
   {
-    id: 3,
+    id: 4,
     slug: "ecosistema-dlds",
     title: "Ecosistema DLDS - Middleware Event-Driven",
     titleEn: "DLDS Ecosystem - Event-Driven Middleware",
@@ -39,11 +49,13 @@ const projects = [
 
 const projectDescriptions = {
   en: {
+    "project-microservices": "Distributed backend architecture and polyglot microservices system that orchestrates AI (RAG), Web Scraping and Computer Vision services. This engine powers the intelligent chat and search of this portfolio.",
     "project-1": "Desktop application for automated job search using AI. Hybrid architecture with Electron, Next.js, Python/FastAPI and Gemini AI for intelligent filtering.",
     "project-2": "Event-driven middleware ecosystem connecting a wholesale distributor with multiple retail stores. Real-time inventory synchronization, automated order replication and drop-shipping flow.",
     "project-3": "Comprehensive laboratory management system designed with an Offline-First strategy. Modular backend architecture based on simplified DDD to handle complex business logic and robust bidirectional synchronization.",
   },
   es: {
+    "project-microservices": "Arquitectura de backend distribuida y políglota que orquesta servicios de IA (RAG), Web Scraping y Visión Computacional. Este sistema es el motor que alimenta el chat inteligente y la búsqueda de este portafolio.",
     "project-1": "Aplicación de escritorio para búsqueda de empleo automatizada con IA. Arquitectura híbrida con Electron, Next.js, Python/FastAPI y Gemini AI para filtrado inteligente.",
     "project-2": "Ecosistema de middleware basado en eventos que conecta un mayorista con múltiples tiendas retail. Sincronización de inventario en tiempo real, replicación automatizada de pedidos y flujo de drop-shipping.",
     "project-3": "Plataforma integral para laboratorios clínicos diseñada con una estrategia Offline-First. Arquitectura backend modular basada en DDD simplificado para manejar lógica de negocio compleja y sincronización bidireccional robusta.",

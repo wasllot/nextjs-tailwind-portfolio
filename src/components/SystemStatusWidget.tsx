@@ -114,9 +114,14 @@ export default function SystemStatusWidget() {
   const [error, setError] = useState<string | null>(null);
   const [language, setLanguage] = useState<"en" | "es">("es");
   const [isExpanded, setIsExpanded] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const widgetRef = useRef<HTMLDivElement>(null);
   const { theme } = useTheme();
-  const isDark = theme === "dark";
+  const isDark = mounted ? theme === "dark" : true;
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const labels = {
     header: language === "es" ? "Estado del Sistema" : "System Health",
@@ -167,11 +172,14 @@ export default function SystemStatusWidget() {
     <div ref={widgetRef} className="relative z-40">
       <div
         className={`
-          absolute bottom-full left-0 mb-4 w-72 
-          transform transition-all duration-300 ease-out origin-bottom-left
+          absolute left-0 right-0 mx-2 md:mx-0 md:left-auto md:right-auto md:w-72 
+          top-full mb-2
+          md:top-auto md:bottom-full md:mb-4
+          h-[50vh] md:h-auto
+          transform transition-all duration-300 ease-out origin-top md:origin-bottom
           ${isExpanded
             ? "translate-y-0 opacity-100 scale-100"
-            : "translate-y-4 opacity-0 scale-95 pointer-events-none"
+            : "-translate-y-4 opacity-0 scale-95 pointer-events-none md:translate-y-4"
           }
         `}
       >

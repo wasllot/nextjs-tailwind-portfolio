@@ -18,6 +18,60 @@ export const projects: Record<string, {
   results: string[];
   resultsEn: string[];
 }> = {
+  "microservices-core-rag": {
+    title: "SaaS Microservices Core & RAG API",
+    titleEn: "SaaS Microservices Core & RAG API",
+    description: "Arquitectura de backend distribuida y políglota que orquesta servicios de IA (RAG), Web Scraping y Visión Computacional. Este sistema es el motor que impulsa el chat inteligente y la búsqueda de este portafolio.",
+    descriptionEn: "Distributed backend architecture and polyglot microservices system that orchestrates AI (RAG), Web Scraping and Computer Vision services. This engine powers the intelligent chat and search of this portfolio.",
+    client: "Proyecto Personal / SaaS",
+    clientEn: "Personal Project / SaaS",
+    year: "2026",
+    technologies: ["Laravel 11", "FastAPI", "Docker Compose", "Traefik", "PostgreSQL (pgvector)", "Redis", "Playwright", "MinIO", "Google Gemini"],
+    link: "",
+    image: "/microservices-api.webp",
+    challenge: [
+      "La Brecha Tecnológica: Necesidad de utilizar las mejores herramientas para cada tarea (Python para IA/Scraping, PHP para lógica de negocio/Auth) sin crear un 'monolito frankenstein'",
+      "Latencia en IA: Integrar modelos LLM (Generación Aumentada por Recuperación) y Web Scraping en tiempo real sin bloquear los procesos del servidor principal",
+      "Escalabilidad: Permitir que el servicio de procesamiento de imágenes o de scraping escale independientemente del núcleo de negocio"
+    ],
+    challengeEn: [
+      "The Technology Gap: Need to use the best tools for each task (Python for AI/Scraping, PHP for business logic/Auth) without creating a 'frankenstein monolith'",
+      "AI Latency: Integrate LLM models (Retrieval Augmented Generation) and Web Scraping in real-time without blocking main server processes",
+      "Scalability: Allow the image processing or scraping service to scale independently from the business core"
+    ],
+    solution: [
+      "Arquitectura de Microservicios Políglotas: Uso de Traefik como Reverse Proxy para enrutar peticiones entre contenedores Docker aislados en una red interna privada",
+      "Orquestación Centralizada: El 'Business Core' (Laravel) maneja la autenticación (Sanctum), límites de velocidad (Throttling) y validación de usuarios antes de consumir los costosos recursos de IA",
+      "Pipeline de Datos Asíncrono: Implementación de colas con Redis para manejar tareas pesadas (como scraping masivo o procesamiento de imágenes con visión computacional) sin afectar la experiencia del usuario"
+    ],
+    solutionEn: [
+      "Polyglot Microservices Architecture: Use of Traefik as Reverse Proxy to route requests between isolated Docker containers in a private internal network",
+      "Centralized Orchestration: The 'Business Core' (Laravel) handles authentication (Sanctum), rate limits (Throttling) and user validation before consuming expensive AI resources",
+      "Asynchronous Data Pipeline: Implementation of queues with Redis to handle heavy tasks (like massive scraping or computer vision image processing) without affecting user experience"
+    ],
+    architecture: [
+      "Business Core (Laravel 11): API Gateway, gestión de usuarios y lógica de negocio",
+      "AI Service (FastAPI): Motor de RAG que genera embeddings y gestiona el contexto de conversación usando pgvector",
+      "Scraper Service (FastAPI): Servicio de extracción web capaz de renderizar JavaScript (Playwright) y evadir bloqueos",
+      "Vision Service: Módulo especializado para OCR y análisis de imágenes, apoiado por almacenamiento de objetos (MinIO)"
+    ],
+    architectureEn: [
+      "Business Core (Laravel 11): API Gateway, user management and business logic",
+      "AI Service (FastAPI): RAG engine that generates embeddings and manages conversation context using pgvector",
+      "Scraper Service (FastAPI): Web extraction service capable of rendering JavaScript (Playwright) and evading blocks",
+      "Vision Service: Specialized module for OCR and image analysis, supported by object storage (MinIO)"
+    ],
+    results: [
+      "Autonomía de Servicios: Despliegue independiente de módulos de IA sin detener el núcleo de negocio",
+      "Eficiencia de Recursos: El scraping y la IA corren en entornos optimizados para Python, mientras que la web corre en el entorno optimizado de PHP",
+      "Experiencia de Usuario: Respuestas de chat contextuales y rápidas gracias a la búsqueda vectorial optimizada"
+    ],
+    resultsEn: [
+      "Service Autonomy: Independent deployment of AI modules without stopping the business core",
+      "Resource Efficiency: Scraping and AI run in Python-optimized environments, while the web runs in the optimized PHP environment",
+      "User Experience: Contextual and fast chat responses thanks to optimized vector search"
+    ]
+  },
   "jobhunter-ai": {
     title: "JobHunter AI - Automatización de Búsqueda de Empleo",
     titleEn: "JobHunter AI - Automated Job Search",

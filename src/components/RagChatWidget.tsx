@@ -69,11 +69,16 @@ export default function RagChatWidget() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const [conversationId, setConversationId] = useState<string | undefined>();
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const { t, language } = useLanguage();
   const { theme } = useTheme();
-  const isDark = theme === "dark";
+  const isDark = mounted ? theme === "dark" : true;
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const labels = {
     toggle: language === "es" ? "Chat IA" : "AI Chat",
@@ -166,8 +171,8 @@ export default function RagChatWidget() {
           onClick={() => setIsOpen(true)}
           className={`fixed bottom-6 right-6 p-4 rounded-full shadow-lg hover:scale-110 transition-all duration-300 group z-50 ${
             isDark
-              ? 'bg-gradient-to-tr from-cyan-500 to-blue-600 text-white shadow-cyan-500/40 hover:shadow-cyan-500/50'
-              : 'bg-gradient-to-tr from-violet-600 to-indigo-600 text-white shadow-violet-500/30 hover:shadow-violet-500/50'
+              ? 'bg-[#64ffda] text-slate-900 shadow-[#64ffda]/30 hover:shadow-[#64ffda]/50'
+              : 'bg-[#0d9488] text-white shadow-teal-600/30 hover:shadow-teal-600/50'
           }`}
           aria-label={labels.toggle}
         >
@@ -191,8 +196,8 @@ export default function RagChatWidget() {
         {/* Header */}
         <div className={`px-4 py-3 border-b ${isDark ? 'border-slate-900 bg-slate-950/50' : 'border-gray-100 bg-white/80'} flex justify-between items-center backdrop-blur-sm sticky top-0 z-10`}>
           <div className="flex items-center gap-3">
-            <div className={`p-2 rounded-xl ${isDark ? 'bg-slate-900' : 'bg-violet-100'}`}>
-              <Sparkles className={`w-5 h-5 ${isDark ? 'text-cyan-400' : 'text-violet-600'}`} />
+            <div className={`p-2 rounded-xl ${isDark ? 'bg-[#64ffda]/10' : 'bg-[#0d9488]/10'}`}>
+              <Sparkles className={`w-5 h-5 ${isDark ? 'text-[#64ffda]' : 'text-[#0d9488]'}`} />
             </div>
             <div>
               <h3 className={`text-sm font-semibold ${isDark ? 'text-slate-100' : 'text-gray-800'}`}>
@@ -220,8 +225,8 @@ export default function RagChatWidget() {
         <div className={`flex-1 overflow-y-auto p-4 space-y-6 ${isDark ? 'bg-slate-950/50' : 'bg-slate-50/50'} scroll-smooth`}>
           {messages.length === 0 && (
             <div className="flex flex-col items-center justify-center h-full text-center px-6">
-              <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-4 transition-transform hover:scale-105 duration-300 ${isDark ? 'bg-slate-900' : 'bg-violet-100'}`}>
-                <Bot className={`w-8 h-8 ${isDark ? 'text-cyan-400' : 'text-violet-600'}`} />
+              <div className={`w-16 h-16 rounded-2xl flex items-center justify-center mb-4 transition-transform hover:scale-105 duration-300 ${isDark ? 'bg-[#64ffda]/10' : 'bg-[#0d9488]/10'}`}>
+                <Bot className={`w-8 h-8 ${isDark ? 'text-[#64ffda]' : 'text-[#0d9488]'}`} />
               </div>
               <h4 className={`text-base font-semibold mb-2 ${isDark ? 'text-slate-100' : 'text-gray-800'}`}>
                 {labels.welcomeTitle}
@@ -238,8 +243,8 @@ export default function RagChatWidget() {
                 className={`max-w-[85%] rounded-2xl px-5 py-3 text-sm leading-relaxed shadow-sm ${
                   msg.role === "user"
                     ? isDark 
-                      ? "bg-gradient-to-r from-cyan-600 to-blue-600 text-white rounded-br-none shadow-md"
-                      : "bg-gradient-to-r from-violet-600 to-indigo-600 text-white rounded-br-none shadow-md"
+                      ? "bg-[#64ffda] text-slate-900 rounded-br-none shadow-md"
+                      : "bg-[#0d9488] text-white rounded-br-none shadow-md"
                     : isDark
                       ? "bg-slate-900 text-slate-200 border border-slate-800 rounded-bl-none shadow-sm"
                       : "bg-white text-gray-700 border border-gray-100 rounded-bl-none shadow-sm"
@@ -260,9 +265,9 @@ export default function RagChatWidget() {
             <div className="flex justify-start">
               <div className={`rounded-2xl rounded-bl-none px-5 py-4 border shadow-sm flex items-center gap-3 ${isDark ? 'bg-slate-900 border-slate-800' : 'bg-white border-gray-100'}`}>
                 <div className="flex gap-1">
-                  <span className={`w-1.5 h-1.5 rounded-full animate-bounce ${isDark ? 'bg-cyan-400' : 'bg-violet-500'}`} style={{ animationDelay: '0ms' }} />
-                  <span className={`w-1.5 h-1.5 rounded-full animate-bounce ${isDark ? 'bg-cyan-400' : 'bg-violet-500'}`} style={{ animationDelay: '150ms' }} />
-                  <span className={`w-1.5 h-1.5 rounded-full animate-bounce ${isDark ? 'bg-cyan-400' : 'bg-violet-500'}`} style={{ animationDelay: '300ms' }} />
+                  <span className={`w-1.5 h-1.5 rounded-full animate-bounce ${isDark ? 'bg-[#64ffda]' : 'bg-[#0d9488]'}`} style={{ animationDelay: '0ms' }} />
+                  <span className={`w-1.5 h-1.5 rounded-full animate-bounce ${isDark ? 'bg-[#64ffda]' : 'bg-[#0d9488]'}`} style={{ animationDelay: '150ms' }} />
+                  <span className={`w-1.5 h-1.5 rounded-full animate-bounce ${isDark ? 'bg-[#64ffda]' : 'bg-[#0d9488]'}`} style={{ animationDelay: '300ms' }} />
                 </div>
                 <span className={`text-xs font-medium ${isDark ? 'text-slate-500' : 'text-gray-500'}`}>{labels.thinking}</span>
               </div>
@@ -281,10 +286,10 @@ export default function RagChatWidget() {
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder={labels.placeholder}
-                className={`w-full pl-4 pr-10 py-3 text-sm rounded-xl border transition-all focus:outline-none focus:ring-2 focus:ring-primary/20 ${
+                className={`w-full pl-4 pr-10 py-3 text-sm rounded-xl border transition-all focus:outline-none focus:ring-2 ${
                   isDark 
-                    ? 'border-slate-800 bg-slate-900 text-slate-100 placeholder:text-slate-500 focus:bg-slate-900'
-                    : 'border-gray-200 bg-gray-50 text-gray-800 placeholder:text-gray-400 focus:bg-white'
+                    ? 'border-slate-800 bg-slate-900 text-slate-100 placeholder:text-slate-500 focus:bg-slate-900 focus:border-[#64ffda]/50'
+                    : 'border-gray-200 bg-gray-50 text-gray-800 placeholder:text-gray-400 focus:bg-white focus:border-[#0d9488]/50'
                 }`}
                 disabled={isLoading}
               />
@@ -297,8 +302,8 @@ export default function RagChatWidget() {
               disabled={!input.trim() || isLoading}
               className={`p-3 rounded-xl shadow-lg transition-all transform hover:scale-105 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed ${
                 isDark 
-                  ? 'bg-cyan-500 text-slate-900 shadow-cyan-500/20 hover:bg-cyan-400 hover:shadow-cyan-500/40'
-                  : 'bg-violet-600 text-white shadow-violet-500/30 hover:bg-violet-500 hover:shadow-xl hover:shadow-violet-500/30'
+                  ? 'bg-[#64ffda] text-slate-900 shadow-[#64ffda]/20 hover:bg-[#5ce9cc] hover:shadow-[#64ffda]/40'
+                  : 'bg-[#0d9488] text-white shadow-teal-600/20 hover:bg-[#0f766e] hover:shadow-teal-600/40'
               }`}
             >
               <Send className="w-4 h-4" />
