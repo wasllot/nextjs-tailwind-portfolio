@@ -123,6 +123,24 @@ export default function SystemStatusWidget() {
     setMounted(true);
   }, []);
 
+  useEffect(() => {
+    const storedLang = localStorage.getItem("language") as "en" | "es" | null;
+    if (storedLang) setLanguage(storedLang);
+    fetchStatus();
+    const interval = setInterval(fetchStatus, POLLING_INTERVAL);
+    return () => clearInterval(interval);
+  }, []);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (widgetRef.current && !widgetRef.current.contains(event.target as Node)) {
+        setIsExpanded(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   const labels = {
     header: language === "es" ? "Estado del Sistema" : "System Health",
     loading: language === "es" ? "Cargando..." : "Loading...",
@@ -147,23 +165,9 @@ export default function SystemStatusWidget() {
     }
   };
 
-  useEffect(() => {
-    const storedLang = localStorage.getItem("language") as "en" | "es" | null;
-    if (storedLang) setLanguage(storedLang);
-    fetchStatus();
-    const interval = setInterval(fetchStatus, POLLING_INTERVAL);
-    return () => clearInterval(interval);
-  }, []);
-
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (widgetRef.current && !widgetRef.current.contains(event.target as Node)) {
-        setIsExpanded(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
+  if (!mounted) {
+    return null;
+  }
 
   const globalStatus = data?.global_status === "healthy" ? "up" : "down";
   const globalStatusColor = getStatusColor(globalStatus);

@@ -165,6 +165,10 @@ export default function RagChatWidget() {
     }
   };
 
+  if (!mounted) {
+    return null;
+  }
+
   return (
     <div className="relative">
       {/* Toggle Button */}

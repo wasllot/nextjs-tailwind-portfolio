@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Switchers from "./Switchers";
 import { useLanguage } from "./LanguageContext";
@@ -8,10 +8,15 @@ import { useTheme } from "next-themes";
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const { t } = useLanguage();
   const { theme } = useTheme();
 
-  const logoSrc = !theme || theme === "dark" ? "/logo-light.webp" : "/logo.webp";
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const logoSrc = !mounted || !theme || theme === "dark" ? "/logo-light.webp" : "/logo.webp";
 
   return (
     <>

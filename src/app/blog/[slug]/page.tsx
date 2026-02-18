@@ -20,29 +20,30 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     };
   }
 
+  const description = article.content.replace(/<[^>]*>/g, '').slice(0, 160);
+
   return {
     title: article.title,
-    description: article.summary,
+    description: description,
     keywords: [
-      ...article.tags,
       "Blog",
       "Full Stack Developer",
       "Software Development",
       "Programming",
+      "Reinaldo Tineo",
     ],
     openGraph: {
       title: `${article.title} | Reinaldo Tineo Blog`,
-      description: article.summary,
+      description: description,
       url: `https://reinaldotineo.online/blog/${slug}`,
       type: "article",
       publishedTime: article.date,
       authors: ["Reinaldo Tineo"],
-      tags: article.tags,
     },
     twitter: {
       card: "summary",
       title: article.title,
-      description: article.summary,
+      description: description,
     },
   };
 }
