@@ -35,7 +35,7 @@ export default function About() {
                 { value: "100%", labelEn: "Remote Ready", labelEs: "Listo para Remoto" },
                 { value: "10+", labelEn: "Projects Delivered", labelEs: "Proyectos Entregados" },
               ].map((stat, idx) => (
-                <div key={idx} className={`p-4 rounded-xl border ${language === "en" ? 'bg-slate-900/50' : 'bg-slate-800/50'} border-slate-700 text-center`}>
+                <div key={idx} className={`p-4 rounded-xl border text-center ${language === "en" ? 'bg-slate-900/50 border-slate-700' : 'bg-white border-slate-200 shadow-sm'}`}>
                   <div className="text-3xl font-bold text-primary mb-1">{stat.value}</div>
                   <div className="text-xs text-secondary">{language === "en" ? stat.labelEn : stat.labelEs}</div>
                 </div>
