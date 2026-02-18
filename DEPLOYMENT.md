@@ -38,9 +38,15 @@
    - **Region**: Choose closest to your target audience
    - **Plan**: Basic ($5/month) or Pro ($12/month)
 
-4. **Environment Variables** (if needed):
-   - Click "Environment Variables"
-   - Add any required variables (currently none needed)
+ 4. **Environment Variables** (if needed):
+    - Click "Environment Variables"
+    - Add the following variables if using the AI chat feature:
+      ```
+      AI_SERVICE_URL: https://your-ai-service.com/chat
+      AI_SERVICE_TOKEN: your-secret-token
+      ```
+
+   **Note**: These variables are optional. Without them, the chat widget will show an error message but the rest of the site will work normally.
 
 5. **Build Settings** (Auto-detected):
    ```yaml
