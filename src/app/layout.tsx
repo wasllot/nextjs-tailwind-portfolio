@@ -86,15 +86,23 @@ export default function RootLayout({
     <html lang="es" suppressHydrationWarning>
       <body className={`${inter.variable} ${mono.variable} antialiased bg-background text-foreground`} suppressHydrationWarning>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
-            <MouseGlow />
-            <LanguageProvider>
+          <a
+            href="#main-content"
+            className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-slate-900 focus:rounded-lg focus:font-medium"
+          >
+            Saltar al contenido
+          </a>
+          <MouseGlow />
+          <LanguageProvider>
             <div className="fixed top-6 right-6 z-50 hidden md:flex">
               <Switchers />
             </div>
             <div className="fixed bottom-6 right-6 z-50 flex flex-col-reverse gap-3 items-end">
               <RagChatWidget />
             </div>
-            {children}
+            <main id="main-content">
+              {children}
+            </main>
           </LanguageProvider>
         </ThemeProvider>
       </body>
