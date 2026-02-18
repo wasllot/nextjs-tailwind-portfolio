@@ -6,7 +6,7 @@ import LogoTicker from "@/components/LogoTicker";
 import TestimonialsGrid from "@/components/TestimonialsGrid";
 import { useLanguage } from "@/components/LanguageContext";
 import { useTheme } from "next-themes";
-import { Send, CheckCircle } from "lucide-react";
+import { Send, CheckCircle, ArrowLeft } from "lucide-react";
 
 const logos = [
   { name: "Partner 1", src: "/partners/1_20260218_104208_0000.svg" },
@@ -100,6 +100,21 @@ export default function ServiciosPage() {
 
   return (
     <div className={`min-h-screen ${isDark ? 'bg-slate-950' : 'bg-white'} text-foreground`}>
+      {/* Back Button */}
+      <div className="fixed top-6 left-6 z-50">
+        <a
+          href="/"
+          className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all hover:scale-105 ${
+            isDark 
+              ? 'bg-slate-800/80 text-slate-300 hover:bg-slate-700' 
+              : 'bg-white/80 text-slate-700 hover:bg-slate-100 shadow-lg'
+          }`}
+        >
+          <ArrowLeft className="w-4 h-4" />
+          <span className="text-sm font-medium">{language === "en" ? "Back" : "Volver"}</span>
+        </a>
+      </div>
+
       {/* Hero Section */}
       <section className="py-32 px-6">
         <div className="max-w-4xl mx-auto text-center">
