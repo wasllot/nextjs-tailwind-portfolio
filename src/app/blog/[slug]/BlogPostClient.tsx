@@ -38,8 +38,7 @@ export default function BlogPostClient() {
 
         <article>
           <header className="mb-8">
-            <span className="font-mono text-sm text-primary">{article.date}</span>
-            <h1 className="text-3xl md:text-4xl font-bold text-foreground mt-2 mb-4">
+            <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
               {title}
             </h1>
           </header>

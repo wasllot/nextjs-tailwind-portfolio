@@ -49,8 +49,6 @@ export default function ProjectDetailClient() {
               {title}
             </h1>
             <div className="flex flex-wrap gap-4 text-sm font-mono text-secondary">
-              <span>{project.year}</span>
-              <span className="text-primary">•</span>
               <span>{client}</span>
             </div>
           </header>

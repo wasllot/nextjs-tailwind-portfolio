@@ -8,7 +8,7 @@ const experiences = [
     id: 1,
     company: "Delight Distribuidores",
     role: "Full Stack Developer",
-    period: "2021 - Actual",
+    period: "2021 - 2026",
     descriptionKey: "exp-1",
     achievements: ["+4 años de colaboración continua", "Middleware de sincronización e-commerce", "Sistema de inventarios multi-plataforma"],
     technologies: ["Python/Django", "Laravel", "NestJS", "Vue.js", "Next.js", "PrestaShop", "Docker"],
