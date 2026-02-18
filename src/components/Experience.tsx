@@ -8,21 +8,27 @@ const experiences = [
     id: 1,
     company: "Delight Distribuidores",
     role: "Full Stack Developer",
+    period: "2021 - Actual",
     descriptionKey: "exp-1",
+    achievements: ["+4 años de colaboración continua", "Middleware de sincronización e-commerce", "Sistema de inventarios multi-plataforma"],
     technologies: ["Python/Django", "Laravel", "NestJS", "Vue.js", "Next.js", "PrestaShop", "Docker"],
   },
   {
     id: 2,
     company: "Cuantica.agency",
     role: "Full Stack Developer & Technical SEO Specialist",
+    period: "2022 - Actual",
     descriptionKey: "exp-2",
+    achievements: ["Colaboración a largo plazo", "Core Web Vitals optimizados", "WPO para múltiples clientes"],
     technologies: ["WordPress", "Laravel", "SEO", "WPO", "REST APIs"],
   },
   {
     id: 3,
     company: "Flaya Import C.A",
     role: "Lead Full Stack Developer · Founder",
+    period: "2018 - 2021",
     descriptionKey: "exp-3",
+    achievements: ["Gestión de equipo de 4 desarrolladores", "E-commerce 360°", "Sistema completo de ventas y operaciones"],
     technologies: ["Laravel", "Vue.js", "MySQL", "Server Administration"],
   },
 ];
@@ -65,10 +71,20 @@ export default function Experience() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.3 }}
               >
-                <h3 className="text-lg font-semibold text-foreground">
-                  {exp.role} · <span className="text-primary">{exp.company}</span>
-                </h3>
-                <p className="text-secondary mt-4 leading-relaxed">{expDescriptions[language][exp.descriptionKey as keyof typeof expDescriptions.en]}</p>
+                <div className="flex flex-col sm:flex-row sm:items-baseline sm:justify-between mb-2">
+                  <h3 className="text-lg font-semibold text-foreground">
+                    {exp.role} · <span className="text-primary">{exp.company}</span>
+                  </h3>
+                  <span className="text-sm text-secondary font-mono">{exp.period}</span>
+                </div>
+                <p className="text-secondary mt-2 leading-relaxed">{expDescriptions[language][exp.descriptionKey as keyof typeof expDescriptions.en]}</p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {exp.achievements.map((achievement, idx) => (
+                    <span key={idx} className="px-2 py-1 text-xs font-mono bg-primary/10 text-primary rounded">
+                      {achievement}
+                    </span>
+                  ))}
+                </div>
                 <ul className="mt-4 flex flex-wrap gap-3">
                   {exp.technologies.map((tech) => (
                     <li key={tech} className="font-mono text-xs text-secondary">

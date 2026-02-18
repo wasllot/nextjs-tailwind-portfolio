@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { useLanguage } from "./LanguageContext";
 
 export default function About() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
 
   /* technologies array removed */
 
@@ -25,7 +25,22 @@ export default function About() {
             <p className="mb-6">{t("about.p1")}</p>
             <p className="mb-6">{t("about.p2")}</p>
             <p className="mb-6">{t("about.p3")}</p>
-            <p className="mb-12">{t("about.p4")}</p>
+            <p className="mb-8">{t("about.p4")}</p>
+
+            {/* Métricas y Logros */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-12">
+              {[
+                { value: "8+", labelEn: "Years Experience", labelEs: "Años de Experiencia" },
+                { value: "4+", labelEn: "Years with Delight", labelEs: "Años con Delight" },
+                { value: "100%", labelEn: "Remote Ready", labelEs: "Listo para Remoto" },
+                { value: "10+", labelEn: "Projects Delivered", labelEs: "Proyectos Entregados" },
+              ].map((stat, idx) => (
+                <div key={idx} className={`p-4 rounded-xl border ${language === "en" ? 'bg-slate-900/50' : 'bg-slate-800/50'} border-slate-700 text-center`}>
+                  <div className="text-3xl font-bold text-primary mb-1">{stat.value}</div>
+                  <div className="text-xs text-secondary">{language === "en" ? stat.labelEn : stat.labelEs}</div>
+                </div>
+              ))}
+            </div>
 
             <h3 className="text-2xl font-bold text-foreground mb-8">{t("about.technologies")}</h3>
 

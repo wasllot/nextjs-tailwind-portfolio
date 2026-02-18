@@ -259,4 +259,116 @@ export const projects: Record<string, {
       "Scalability: adding new stores without modifying the core"
     ]
   },
+  "price-comparator": {
+    title: "Price Comparator - Growshops Chile",
+    titleEn: "Price Comparator - Growshops Chile",
+    description: "Comparador de precios automatizado para el nicho de growshops en Chile. Scraping inteligente que monitorea competidores y genera insights de mercado.",
+    descriptionEn: "Automated price comparator for the growshops niche in Chile. Smart scraping that monitors competitors and generates market insights.",
+    client: "Proyecto Personal",
+    clientEn: "Personal Project",
+    year: "2025",
+    technologies: ["Python", "FastAPI", "Playwright", "BeautifulSoup", "PostgreSQL", "Docker", "Web Scraping"],
+    link: "",
+    repo: "",
+    image: "",
+    challenge: [
+      "Monitoreo manual de precios de múltiples competidores",
+      "Dificultad para identificar tendencias de mercado",
+      "Actualización constante de estrategias de precios"
+    ],
+    challengeEn: [
+      "Manual monitoring of competitor prices",
+      "Difficulty identifying market trends",
+      "Constant updating of pricing strategies"
+    ],
+    solution: [
+      "Sistema automatizado de scraping con renderizado JavaScript",
+      "Dashboard con análisis de tendencias y oportunidades",
+      "Alertas configurables para cambios significativos"
+    ],
+    solutionEn: [
+      "Automated scraping system with JavaScript rendering",
+      "Dashboard with trend analysis and opportunities",
+      "Configurable alerts for significant changes"
+    ],
+    architecture: [
+      "Scraper Service: Playwright para renderizado y extracción",
+      "API Backend: FastAPI para procesamiento y almacenamiento",
+      "Database: PostgreSQL con datos históricos",
+      "Scheduler: Ejecuciones periódicas automatizadas"
+    ],
+    architectureEn: [
+      "Scraper Service: Playwright for rendering and extraction",
+      "API Backend: FastAPI for processing and storage",
+      "Database: PostgreSQL with historical data",
+      "Scheduler: Automated periodic executions"
+    ],
+    results: [
+      "Monitoreo de 50+ fuentes de datos",
+      "Análisis de tendencias en tiempo real",
+      "Decisiones de pricing basadas en datos"
+    ],
+    resultsEn: [
+      "Monitoring 50+ data sources",
+      "Real-time trend analysis",
+      "Data-driven pricing decisions"
+    ]
+  },
+  "infra-digitalocean": {
+    title: "Infraestructura DigitalOcean - Servidores Production",
+    titleEn: "DigitalOcean Infrastructure - Production Servers",
+    description: "Implementación completa de infraestructura en DigitalOcean: Droplets configurados con Nginx, PM2 y despliegue de aplicaciones modernas incluyendo este portafolio.",
+    descriptionEn: "Complete infrastructure implementation on DigitalOcean: Droplets configured with Nginx, PM2 and deployment of modern applications including this portfolio.",
+    client: "Varios Proyectos",
+    clientEn: "Various Projects",
+    year: "2024-2025",
+    technologies: ["DigitalOcean", "Nginx", "PM2", "Docker", "Ubuntu", "SSL/TLS", "Cloudflare"],
+    link: "https://reinaldotineo.online",
+    repo: "",
+    image: "",
+    challenge: [
+      "Necesidad de hosting profesional para aplicaciones de producción",
+      "Configuración segura de servidores desde cero",
+      "Despliegues automatizados y continuos"
+    ],
+    challengeEn: [
+      "Need for professional hosting for production applications",
+      "Secure server configuration from scratch",
+      "Automated and continuous deployments"
+    ],
+    solution: [
+      "Droplets optimizados con Ubuntu Server",
+      "Reverse Proxy con Nginx para múltiples aplicaciones",
+      "Process Manager con PM2 para Node.js",
+      "SSL/TLS con Certbot y Cloudflare"
+    ],
+    solutionEn: [
+      "Optimized Droplets with Ubuntu Server",
+      "Reverse Proxy with Nginx for multiple applications",
+      "Process Manager with PM2 for Node.js",
+      "SSL/TLS with Certbot and Cloudflare"
+    ],
+    architecture: [
+      "Droplet Principal: Nginx como Reverse Proxy",
+      "Aplicaciones: PM2 gestionando Next.js, FastAPI, Laravel",
+      "Seguridad: UFW firewall, fail2ban, SSH keys",
+      "DNS: Cloudflare como CDN y protección"
+    ],
+    architectureEn: [
+      "Main Droplet: Nginx as Reverse Proxy",
+      "Applications: PM2 managing Next.js, FastAPI, Laravel",
+      "Security: UFW firewall, fail2ban, SSH keys",
+      "DNS: Cloudflare as CDN and protection"
+    ],
+    results: [
+      "Alta disponibilidad de servicios",
+      "Certificados SSL automáticos",
+      "Tiempo de respuesta optimizado"
+    ],
+    resultsEn: [
+      "High availability of services",
+      "Automatic SSL certificates",
+      "Optimized response time"
+    ]
+  },
 };
