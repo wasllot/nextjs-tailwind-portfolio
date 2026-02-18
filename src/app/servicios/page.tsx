@@ -97,8 +97,11 @@ export default function ServiciosPage() {
     e.preventDefault();
     setIsSubmitting(true);
 
+    setSubmitted(true);
+    setIsSubmitting(false);
+
     try {
-      const response = await fetch("/api/contact", {
+      await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -108,14 +111,8 @@ export default function ServiciosPage() {
           message: formData.message,
         }),
       });
-
-      if (response.ok) {
-        setSubmitted(true);
-      }
     } catch (error) {
       console.error("Form submission error:", error);
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
