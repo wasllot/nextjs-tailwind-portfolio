@@ -206,9 +206,18 @@ export default function RagChatWidget() {
               <Sparkles className={`w-5 h-5 ${isDark ? 'text-[#64ffda]' : 'text-[#0d9488]'}`} />
             </div>
             <div>
-              <h3 className={`text-sm font-semibold ${isDark ? 'text-slate-100' : 'text-gray-800'}`}>
-                {labels.toggle}
-              </h3>
+              <div className="flex items-center gap-2">
+                <h3 className={`text-sm font-semibold ${isDark ? 'text-slate-100' : 'text-gray-800'}`}>
+                  {labels.toggle}
+                </h3>
+                <span className={`px-1.5 py-0.5 text-[9px] font-bold rounded-full ${
+                  isDark 
+                    ? 'bg-amber-500/20 text-amber-400 border border-amber-500/30' 
+                    : 'bg-amber-100 text-amber-700 border border-amber-200'
+                }`}>
+                  {language === "es" ? "BETA" : "BETA"}
+                </span>
+              </div>
               <div className="flex items-center gap-1.5">
                 <span className="relative flex h-2 w-2">
                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 bg-emerald-500"></span>

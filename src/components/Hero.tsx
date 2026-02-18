@@ -28,7 +28,7 @@ export default function Hero() {
             {t("hero.cta")}
           </a>
           <a
-            href="mailto:rei.vzl@gmail.com"
+            href="/servicios"
             className="inline-block border border-secondary/50 px-8 py-4 font-mono text-secondary btn-hover hover:border-primary hover:text-primary transition-colors duration-300 rounded-sm"
           >
             {t("hero.ctahire")}
