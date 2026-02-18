@@ -18,8 +18,6 @@ interface ChatResponse {
   conversation_id: string;
 }
 
-const API_URL = "https://api.reinaldotineo.online/ai/chat";
-
 const playSendSound = () => {
   try {
     const audioContext = new (window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext)();
@@ -120,7 +118,7 @@ export default function RagChatWidget() {
     setIsLoading(true);
 
     try {
-      const response = await fetch(API_URL, {
+      const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
