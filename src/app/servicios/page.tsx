@@ -18,7 +18,6 @@ const logos = [
   { name: "Partner 7", src: "/partners/7_20260218_104209_0006.svg" },
   { name: "Partner 8", src: "/partners/8_20260218_104209_0007.svg" },
   { name: "Partner 9", src: "/partners/9_20260218_104209_0008.svg" },
-  { name: "Partner 10", src: "/partners/10_20260218_104209_0009.svg" },
   { name: "Partner 11", src: "/partners/11_20260218_104209_0010.svg" },
   { name: "Partner 12", src: "/partners/12_20260218_104209_0011.svg" },
   { name: "Partner 13", src: "/partners/13_20260218_104209_0012.svg" },
