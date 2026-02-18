@@ -2,19 +2,19 @@
 
 > Full Stack Developer & Software Architect specializing in high-performance digital experiences.
 
-[![CI/CD](https://github.com/YOUR_USERNAME/my-portfolio/workflows/CI/CD%20Pipeline/badge.svg)](https://github.com/YOUR_USERNAME/my-portfolio/actions)
+[![CI/CD](https://github.com/wasllot/nextjs-tailwind-portfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/wasllot/nextjs-tailwind-portfolio/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
 ## 🎯 About
 
 This is my personal portfolio showcasing my expertise in building scalable, high-performance web applications. The portfolio emphasizes clean architecture, modern design patterns, and extreme performance optimization.
 
-**Live Demo**: [Your Live URL]
+**Live Demo**: [reinaldotineo.online](https://reinaldotineo.online)
 
 ## ✨ Features
 
 - **Responsive Design**: Fully responsive layout that works seamlessly across all devices
-- **Bilingual Support**: English/Spanish language toggle with `next-i18n`
+- **Bilingual Support**: English/Spanish language toggle with custom LanguageContext
 - **Living Aurora Background**: Subtle animated gradient orbs using Framer Motion
 - **Glassmorphism UI**: Modern semi-transparent design with backdrop blur effects
 - **Dark/Light Mode**: Theme switcher with persistent preferences
@@ -39,7 +39,7 @@ This is my personal portfolio showcasing my expertise in building scalable, high
 - **Linting**: ESLint 9
 - **Version Control**: Git
 - **CI/CD**: GitHub Actions
-- **Deployment**: Digital Ocean App Platform
+- **Deployment**: DigitalOcean App Platform
 
 ### Best Practices
 - Clean Architecture
@@ -59,7 +59,7 @@ This is my personal portfolio showcasing my expertise in building scalable, high
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/YOUR_USERNAME/my-portfolio.git
+   git clone https://github.com/wasllot/nextjs-tailwind-portfolio.git
    cd my-portfolio
    ```
 
@@ -98,7 +98,10 @@ my-portfolio/
 │   ├── app/
 │   │   ├── layout.tsx      # Root layout
 │   │   ├── page.tsx        # Main page
-│   │   └── globals.css     # Global styles
+│   │   ├── globals.css     # Global styles
+│   │   ├── servicios/      # Servicios page
+│   │   ├── blog/          # Blog pages
+│   │   └── projects/      # Projects pages
 │   └── components/
 │       ├── About.tsx       # About section with strategic pillars
 │       ├── Background.tsx  # Animated background component
@@ -124,14 +127,14 @@ my-portfolio/
 
 ## 🌐 Deployment
 
-This project is configured for deployment on **Digital Ocean App Platform**.
+This project is configured for deployment on **DigitalOcean App Platform**.
 
 For detailed deployment instructions, see [DEPLOYMENT.md](./DEPLOYMENT.md).
 
 ### Quick Deploy
 
 1. Push code to GitHub
-2. Connect repository in Digital Ocean App Platform
+2. Connect repository in DigitalOcean App Platform
 3. Auto-deploy is configured - every push to `main` triggers deployment
 
 ## 🔧 Available Scripts
@@ -159,7 +162,7 @@ Full Stack Developer & Software Architect
 
 - 📧 Email: [rei.vzl@gmail.com](mailto:rei.vzl@gmail.com)
 - 💼 LinkedIn: [linkedin.com/in/reinaldotineo](https://linkedin.com/in/reinaldotineo)
-- 🌐 Website: [Your Portfolio URL]
+- 🌐 Website: [reinaldotineo.online](https://reinaldotineo.online)
 
 ---
 
