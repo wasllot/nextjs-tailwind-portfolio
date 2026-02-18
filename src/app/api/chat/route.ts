@@ -87,7 +87,7 @@ export async function POST(request: NextRequest) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        ...(AI_SERVICE_TOKEN ? { "Authorization": `Bearer ${AI_SERVICE_TOKEN}` } : {}),
+        "Authorization": AI_SERVICE_TOKEN ? `Bearer ${AI_SERVICE_TOKEN}` : "",
       },
       body: JSON.stringify({
         question: sanitizedQuestion,
