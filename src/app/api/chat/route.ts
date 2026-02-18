@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const AI_SERVICE_URL = process.env.AI_SERVICE_URL || "https://api.reinaldotineo.online/ai/chat";
+const AI_SERVICE_URL = process.env.AI_SERVICE_URL 
+  ? `${process.env.AI_SERVICE_URL}/ai/chat`
+  : "https://api.reinaldotineo.online/ai/chat";
 const AI_SERVICE_TOKEN = process.env.AI_SERVICE_TOKEN;
 
 // Simple in-memory rate limiting (use Redis for production)
