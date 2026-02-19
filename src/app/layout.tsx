@@ -104,7 +104,7 @@ export default function RootLayout({
             <div className="fixed top-6 right-6 z-50 hidden md:flex">
               <Switchers />
             </div>
-            <div className="fixed bottom-12 right-6 z-40 flex flex-col-reverse gap-3 items-end">
+            <div className="fixed bottom-20 right-8 z-40 flex flex-col-reverse gap-3 items-end">
               <RagChatWidget />
             </div>
             <main id="main-content">
