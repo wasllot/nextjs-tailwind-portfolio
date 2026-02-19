@@ -97,15 +97,19 @@ export default function ServiciosPage() {
     const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI";
     return new Promise((resolve) => {
       if (typeof window !== "undefined" && (window as unknown as { grecaptcha: unknown }).grecaptcha) {
-        const grecaptcha = window as unknown as { grecaptcha: { execute: (siteKey: string, action: string) => Promise<string> } };
-        grecaptcha.grecaptcha.execute(
-          siteKey,
-          "contact"
-        ).then((token: string) => {
-          resolve(token);
-        }).catch(() => {
+        try {
+          const win = window as unknown as { grecaptcha: { execute: (siteKey: string, action: { action: string }) => Promise<string> } };
+          win.grecaptcha.execute(
+            siteKey,
+            { action: "contact" }
+          ).then((token: string) => {
+            resolve(token);
+          }).catch(() => {
+            resolve("");
+          });
+        } catch {
           resolve("");
-        });
+        }
       } else {
         resolve("");
       }
