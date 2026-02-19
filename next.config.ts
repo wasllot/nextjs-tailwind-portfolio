@@ -36,6 +36,7 @@ const nextConfig: NextConfig = {
               "img-src 'self' blob: data: https:; " +
               "font-src 'self' data:; " +
               "connect-src 'self' https: https://www.google.com; " +
+              "frame-src 'self' https://www.google.com; " +
               "frame-ancestors 'none';",
           },
           // Prevents Google from showing cached version
