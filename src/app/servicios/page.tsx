@@ -358,7 +358,11 @@ export default function ServiciosPage() {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full py-4 bg-primary text-white font-semibold rounded-lg hover:bg-primary/90 transition-colors flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className={`w-full py-4 font-semibold rounded-lg transition-colors flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed ${
+                    isDark 
+                      ? 'bg-primary text-slate-900 hover:bg-primary/90' 
+                      : 'bg-primary text-white hover:bg-primary/90'
+                  }`}
                 >
                   <Send className={`w-5 h-5 ${isSubmitting ? 'animate-pulse' : ''}`} />
                   {isSubmitting 
