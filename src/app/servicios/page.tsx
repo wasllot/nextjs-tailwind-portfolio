@@ -93,9 +93,29 @@ export default function ServiciosPage() {
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  const executeRecaptcha = async (): Promise<string> => {
+    return new Promise((resolve) => {
+      if (typeof window !== "undefined" && (window as unknown as { grecaptcha: unknown }).grecaptcha) {
+        const grecaptcha = window as unknown as { grecaptcha: { execute: (siteKey: string, action: string) => Promise<string> } };
+        grecaptcha.grecaptcha.execute(
+          "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI",
+          "contact"
+        ).then((token: string) => {
+          resolve(token);
+        }).catch(() => {
+          resolve("");
+        });
+      } else {
+        resolve("");
+      }
+    });
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+
+    const recaptchaToken = await executeRecaptcha();
 
     setSubmitted(true);
     setIsSubmitting(false);
@@ -109,6 +129,7 @@ export default function ServiciosPage() {
           email: formData.email,
           projectType: formData.projectType,
           message: formData.message,
+          recaptchaToken,
         }),
       });
     } catch (error) {

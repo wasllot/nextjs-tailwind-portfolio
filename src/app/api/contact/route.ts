@@ -6,6 +6,8 @@ const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
 const RATE_LIMIT = 3;
 const RATE_LIMIT_WINDOW = 60 * 1000;
 
+const RECAPTCHA_SECRET_KEY = process.env.RECAPTCHA_SECRET_KEY;
+
 function getClientIP(request: NextRequest): string {
   return request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() 
     || request.headers.get("x-real-ip") 
@@ -41,6 +43,7 @@ interface ContactBody {
   email?: unknown;
   projectType?: unknown;
   message?: unknown;
+  recaptchaToken?: unknown;
 }
 
 function isValidContactBody(body: ContactBody): boolean {
@@ -54,6 +57,27 @@ function isValidContactBody(body: ContactBody): boolean {
     body.message.length > 0 &&
     body.message.length <= 5000
   );
+}
+
+async function verifyRecaptcha(token: string): Promise<boolean> {
+  if (!token || !RECAPTCHA_SECRET_KEY) {
+    return false;
+  }
+
+  try {
+    const response = await fetch(
+      `https://www.google.com/recaptcha/api/siteverify?secret=${RECAPTCHA_SECRET_KEY}&response=${token}`,
+      {
+        method: "POST",
+      }
+    );
+
+    const data = await response.json();
+    return data.success && data.score >= 0.5;
+  } catch (error) {
+    console.error("Recaptcha verification error:", error);
+    return false;
+  }
 }
 
 function saveToFile(data: object): void {
@@ -95,6 +119,16 @@ export async function POST(request: NextRequest) {
         { error: "Invalid form data" },
         { status: 400 }
       );
+    }
+
+    if (RECAPTCHA_SECRET_KEY) {
+      const isValidRecaptcha = await verifyRecaptcha(body.recaptchaToken as string);
+      if (!isValidRecaptcha) {
+        return NextResponse.json(
+          { error: "Recaptcha verification failed" },
+          { status: 400 }
+        );
+      }
     }
 
     const { name, email, projectType, message } = body;

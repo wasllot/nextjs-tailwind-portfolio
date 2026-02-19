@@ -31,11 +31,11 @@ const nextConfig: NextConfig = {
             key: "Content-Security-Policy",
             value: 
               "default-src 'self'; " +
-              "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://api.dicebear.com https://static.cloudflareinsights.com; " +
+              "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://api.dicebear.com https://static.cloudflareinsights.com https://www.google.com https://www.gstatic.com; " +
               "style-src 'self' 'unsafe-inline'; " +
               "img-src 'self' blob: data: https:; " +
               "font-src 'self' data:; " +
-              "connect-src 'self' https:; " +
+              "connect-src 'self' https: https://www.google.com; " +
               "frame-ancestors 'none';",
           },
           // Prevents Google from showing cached version
