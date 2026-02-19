@@ -94,11 +94,12 @@ export default function ServiciosPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const executeRecaptcha = async (): Promise<string> => {
+    const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI";
     return new Promise((resolve) => {
       if (typeof window !== "undefined" && (window as unknown as { grecaptcha: unknown }).grecaptcha) {
         const grecaptcha = window as unknown as { grecaptcha: { execute: (siteKey: string, action: string) => Promise<string> } };
         grecaptcha.grecaptcha.execute(
-          "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI",
+          siteKey,
           "contact"
         ).then((token: string) => {
           resolve(token);

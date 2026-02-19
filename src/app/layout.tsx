@@ -77,6 +77,19 @@ export const metadata: Metadata = {
   },
 };
 
+export function Head() {
+  const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI";
+  return (
+    <>
+      <script
+        src={`https://www.google.com/recaptcha/api.js?render=${siteKey}`}
+        async
+        defer
+      />
+    </>
+  );
+}
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -84,13 +97,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" suppressHydrationWarning>
-      <head>
-        <script
-          src="https://www.google.com/recaptcha/api.js?render=6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
-          async
-          defer
-        />
-      </head>
+      <Head />
       <body className={`${inter.variable} ${mono.variable} antialiased bg-background text-foreground`} suppressHydrationWarning>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
           <a
@@ -104,7 +111,7 @@ export default function RootLayout({
             <div className="fixed top-6 right-6 z-50 hidden md:flex">
               <Switchers />
             </div>
-            <div className="fixed bottom-20 right-8 z-40 flex flex-col-reverse gap-3 items-end">
+            <div className="fixed bottom-20 right-2 z-40 flex flex-col-reverse gap-3 items-end">
               <RagChatWidget />
             </div>
             <main id="main-content">
