@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
+import { writeFileSync, existsSync, mkdirSync, readFileSync } from "fs";
+import { join } from "path";
 
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
-const RATE_LIMIT = 3; // Max requests per window
-const RATE_LIMIT_WINDOW = 60 * 1000; // 1 minute
+const RATE_LIMIT = 3;
+const RATE_LIMIT_WINDOW = 60 * 1000;
 
 function getClientIP(request: NextRequest): string {
   return request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() 
@@ -54,6 +56,28 @@ function isValidContactBody(body: ContactBody): boolean {
   );
 }
 
+function saveToFile(data: object): void {
+  try {
+    const dataDir = join(process.cwd(), "data");
+    if (!existsSync(dataDir)) {
+      mkdirSync(dataDir, { recursive: true });
+    }
+    
+    const filePath = join(dataDir, "messages.json");
+    let messages: object[] = [];
+    
+    if (existsSync(filePath)) {
+      const content = readFileSync(filePath, "utf-8");
+      messages = JSON.parse(content || "[]");
+    }
+    
+    messages.push(data);
+    writeFileSync(filePath, JSON.stringify(messages, null, 2));
+  } catch (error) {
+    console.error("Error saving to file:", error);
+  }
+}
+
 export async function POST(request: NextRequest) {
   try {
     const clientIP = getClientIP(request);
@@ -75,20 +99,17 @@ export async function POST(request: NextRequest) {
 
     const { name, email, projectType, message } = body;
 
-    // Here you would integrate with your preferred notification service
-    // For example: email service, Slack, Telegram, etc.
-    
-    // Example: Log the contact request (replace with actual notification)
-    console.log("New contact form submission:", {
+    const contactData = {
       name: sanitizeInput(name),
       email: sanitizeInput(email),
       projectType: sanitizeInput(projectType || "not specified"),
       message: sanitizeInput(message),
       timestamp: new Date().toISOString(),
-    });
+    };
 
-    // TODO: Integrate with email service (e.g., SendGrid, Resend, Nodemailer)
-    // TODO: Or notify via Telegram/Slack webhook
+    console.log("New contact form submission:", contactData);
+
+    saveToFile(contactData);
     
     return NextResponse.json({
       success: true,
