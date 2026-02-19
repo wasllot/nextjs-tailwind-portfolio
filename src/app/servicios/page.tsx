@@ -90,8 +90,39 @@ export default function ServiciosPage() {
     projectType: "",
     message: "",
   });
+  const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const validateForm = (): boolean => {
+    const newErrors: Record<string, string> = {};
+
+    if (!formData.name.trim()) {
+      newErrors.name = language === "en" ? "Name is required" : "El nombre es requerido";
+    } else if (formData.name.length < 2) {
+      newErrors.name = language === "en" ? "Name is too short" : "El nombre es muy corto";
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!formData.email.trim()) {
+      newErrors.email = language === "en" ? "Email is required" : "El email es requerido";
+    } else if (!emailRegex.test(formData.email)) {
+      newErrors.email = language === "en" ? "Invalid email format" : "Formato de email inválido";
+    }
+
+    if (!formData.projectType) {
+      newErrors.projectType = language === "en" ? "Project type is required" : "El tipo de proyecto es requerido";
+    }
+
+    if (!formData.message.trim()) {
+      newErrors.message = language === "en" ? "Message is required" : "El mensaje es requerido";
+    } else if (formData.message.length < 10) {
+      newErrors.message = language === "en" ? "Message is too short" : "El mensaje es muy corto";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const executeRecaptcha = async (): Promise<string> => {
     const siteKey = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY || "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI";
@@ -118,6 +149,11 @@ export default function ServiciosPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    if (!validateForm()) {
+      return;
+    }
+
     setIsSubmitting(true);
 
     const recaptchaToken = await executeRecaptcha();
@@ -312,29 +348,39 @@ export default function ServiciosPage() {
                     </label>
                     <input
                       type="text"
-                      required
                       value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      onChange={(e) => {
+                        setFormData({ ...formData, name: e.target.value });
+                        if (errors.name) setErrors({ ...errors, name: "" });
+                      }}
                       className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-primary transition-colors ${
-                        isDark 
-                          ? 'bg-slate-900 border-slate-800 text-white placeholder:text-slate-500' 
-                          : 'bg-white border-slate-300 text-slate-900 placeholder:text-slate-400'
+                        errors.name 
+                          ? 'border-red-500 focus:border-red-500' 
+                          : isDark 
+                            ? 'bg-slate-900 border-slate-800 text-white placeholder:text-slate-500' 
+                            : 'bg-white border-slate-300 text-slate-900 placeholder:text-slate-400'
                       }`}
                     />
+                    {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
                   </div>
                   <div>
                     <label className={`block text-sm font-medium mb-2 ${isDark ? 'text-slate-300' : 'text-slate-700'}`}>Email</label>
                     <input
                       type="email"
-                      required
                       value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      onChange={(e) => {
+                        setFormData({ ...formData, email: e.target.value });
+                        if (errors.email) setErrors({ ...errors, email: "" });
+                      }}
                       className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-primary transition-colors ${
-                        isDark 
-                          ? 'bg-slate-900 border-slate-800 text-white placeholder:text-slate-500' 
-                          : 'bg-white border-slate-300 text-slate-900 placeholder:text-slate-400'
+                        errors.email 
+                          ? 'border-red-500 focus:border-red-500' 
+                          : isDark 
+                            ? 'bg-slate-900 border-slate-800 text-white placeholder:text-slate-500' 
+                            : 'bg-white border-slate-300 text-slate-900 placeholder:text-slate-400'
                       }`}
                     />
+                    {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
                   </div>
                 </div>
 
@@ -343,13 +389,17 @@ export default function ServiciosPage() {
                     {language === "en" ? "Project Type" : "Tipo de Proyecto"}
                   </label>
                   <select
-                    required
                     value={formData.projectType}
-                    onChange={(e) => setFormData({ ...formData, projectType: e.target.value })}
+                    onChange={(e) => {
+                      setFormData({ ...formData, projectType: e.target.value });
+                      if (errors.projectType) setErrors({ ...errors, projectType: "" });
+                    }}
                     className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-primary transition-colors ${
-                      isDark 
-                        ? 'bg-slate-900 border-slate-800 text-white' 
-                        : 'bg-white border-slate-300 text-slate-900'
+                      errors.projectType 
+                        ? 'border-red-500 focus:border-red-500' 
+                        : isDark 
+                          ? 'bg-slate-900 border-slate-800 text-white' 
+                          : 'bg-white border-slate-300 text-slate-900'
                     }`}
                   >
                     <option value="">Selecciona una opción...</option>
@@ -359,6 +409,7 @@ export default function ServiciosPage() {
                       </option>
                     ))}
                   </select>
+                  {errors.projectType && <p className="text-red-500 text-xs mt-1">{errors.projectType}</p>}
                 </div>
 
                 <div>
@@ -366,19 +417,24 @@ export default function ServiciosPage() {
                     {language === "en" ? "Message" : "Mensaje"}
                   </label>
                   <textarea
-                    required
                     rows={5}
                     value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    onChange={(e) => {
+                      setFormData({ ...formData, message: e.target.value });
+                      if (errors.message) setErrors({ ...errors, message: "" });
+                    }}
                     className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:border-primary transition-colors resize-none ${
-                      isDark 
-                        ? 'bg-slate-900 border-slate-800 text-white placeholder:text-slate-500' 
-                        : 'bg-white border-slate-300 text-slate-900 placeholder:text-slate-400'
+                      errors.message 
+                        ? 'border-red-500 focus:border-red-500' 
+                        : isDark 
+                          ? 'bg-slate-900 border-slate-800 text-white placeholder:text-slate-500' 
+                          : 'bg-white border-slate-300 text-slate-900 placeholder:text-slate-400'
                     }`}
                     placeholder={language === "en" 
                       ? "Tell me about your project, goals, and timeline..." 
                       : "Cuéntame sobre tu proyecto, objetivos y cronograma..."}
                   />
+                  {errors.message && <p className="text-red-500 text-xs mt-1">{errors.message}</p>}
                 </div>
 
                 <button
