@@ -58,6 +58,19 @@ export default function Navigation() {
             <li><a href="#projects" className="text-primary" onClick={() => setIsOpen(false)}>{t("nav.projects")}</a></li>
             <li><a href="#writing" className="text-primary" onClick={() => setIsOpen(false)}>{t("writing.title")}</a></li>
           </ul>
+          <div className="mt-10">
+            <a
+              href="/consulta-tecnica"
+              className="animate-suspension inline-flex items-center gap-3 px-6 py-4 rounded-xl font-semibold text-white shadow-lg hover:brightness-110 transition-all"
+              style={{
+                background: "linear-gradient(135deg, #f59e0b 0%, #f97316 100%)",
+                boxShadow: "0 4px 18px rgba(245,158,11,0.35)",
+              }}
+            >
+              <span className="w-2 h-2 rounded-full bg-white" />
+              🚀 Consulta técnica gratis
+            </a>
+          </div>
         </div>
       )}
     </>

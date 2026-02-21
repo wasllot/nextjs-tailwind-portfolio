@@ -91,8 +91,15 @@ a {
 
 /* Smooth scroll indicator animation */
 @keyframes scroll-bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(8px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(8px);
+  }
 }
 
 /* Fade in animation for sections */
@@ -101,6 +108,7 @@ a {
     opacity: 0;
     transform: translateY(20px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -253,4 +261,46 @@ a {
   border: none;
   border-top: 1px solid var(--muted);
   margin: 2rem 0;
+}
+
+/* ── Consulta CTA "estoy aquí" animation (Softened) ── */
+@keyframes consulta-ping {
+  0% {
+    transform: scale(1);
+    opacity: 0.3;
+  }
+
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+
+@keyframes consulta-glow {
+
+  0%,
+  100% {
+    box-shadow: 0 4px 14px rgba(245, 158, 11, 0.3);
+  }
+
+  50% {
+    box-shadow: 0 4px 24px rgba(249, 115, 22, 0.4), 0 0 0 4px rgba(245, 158, 11, 0.05);
+  }
+}
+
+.consulta-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+  animation: consulta-ping 3s cubic-bezier(0, 0, 0.2, 1) infinite;
+  pointer-events: none;
+}
+
+.consulta-ring-delay {
+  animation-delay: 1.5s;
+}
+
+.consulta-btn-glow {
+  animation: consulta-glow 3s ease-in-out infinite;
 }

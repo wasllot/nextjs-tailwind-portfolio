@@ -77,6 +77,21 @@ export default function Sidebar() {
           </ul>
         </nav>
 
+        {/* Consultation CTA */}
+        <div className="mb-10">
+          <a
+            href="/consulta-tecnica"
+            className="animate-suspension inline-flex items-center gap-3 px-5 py-3 rounded-xl font-semibold text-sm text-white transition-all hover:shadow-lg hover:brightness-110"
+            style={{
+              background: "linear-gradient(135deg, #f59e0b 0%, #f97316 100%)",
+              boxShadow: "0 4px 18px rgba(245,158,11,0.35)",
+            }}
+          >
+            <span className="w-2 h-2 rounded-full bg-white flex-shrink-0" />
+            🚀 Consulta técnica gratis
+          </a>
+        </div>
+
         {/* Social Links */}
         <div className="flex items-center gap-8">
           {[
