@@ -193,10 +193,19 @@ export default function RagChatWidget() {
           ${isDark ? 'bg-slate-950/95' : 'bg-white/95'} backdrop-blur-xl 
           ${isDark ? 'border-slate-800' : 'border-gray-200'} 
           shadow-2xl md:rounded-2xl 
-          flex flex-col overflow-hidden transition-all duration-300 ease-out origin-bottom-right
+          flex flex-col overflow-hidden transition-all duration-300 ease-out origin-bottom-right z-50
           ${isOpen ? 'opacity-100 scale-100 translate-y-0' : 'opacity-0 scale-95 translate-y-10 pointer-events-none'}
         `}
       >
+        {/* Close button for mobile */}
+        <button
+          onClick={() => setIsOpen(false)}
+          className="md:hidden absolute top-4 right-4 p-2 rounded-lg bg-slate-800/50 text-slate-400 z-20"
+          aria-label={labels.close}
+        >
+          <X className="w-6 h-6" />
+        </button>
+
         {/* Header */}
         <div className={`px-4 py-3 border-b ${isDark ? 'border-slate-900 bg-slate-950/50' : 'border-gray-100 bg-white/80'} flex justify-between items-center backdrop-blur-sm sticky top-0 z-10`}>
           <div className="flex items-center gap-3">
@@ -227,7 +236,7 @@ export default function RagChatWidget() {
           </div>
           <button
             onClick={() => setIsOpen(false)}
-            className={`p-2 rounded-lg transition-colors ${isDark ? 'hover:bg-slate-800 text-slate-400' : 'hover:bg-gray-100 text-gray-500'}`}
+            className={`p-2 rounded-lg transition-colors md:flex hidden ${isDark ? 'hover:bg-slate-800 text-slate-400' : 'hover:bg-gray-100 text-gray-500'}`}
             aria-label={labels.close}
           >
             <X className="w-5 h-5" />
