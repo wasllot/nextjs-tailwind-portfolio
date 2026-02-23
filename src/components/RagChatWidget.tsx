@@ -200,7 +200,7 @@ export default function RagChatWidget() {
         {/* Close button for mobile */}
         <button
           onClick={() => setIsOpen(false)}
-          className="md:hidden absolute top-4 right-4 p-2 rounded-lg bg-slate-800/50 text-slate-400 z-20"
+          className="md:hidden absolute top-20 right-4 p-3 rounded-full bg-slate-800/80 text-slate-200 shadow-lg z-50"
           aria-label={labels.close}
         >
           <X className="w-6 h-6" />
