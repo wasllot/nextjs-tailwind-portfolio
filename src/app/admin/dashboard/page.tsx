@@ -25,13 +25,16 @@ interface Consultation {
 
 interface Briefing {
   tipo: string[];
-  tipoOtro: string;
+  tipoOtro?: string;
   plataforma: string[];
   funciones: string[];
+  funcionesOtro?: string;
   usuarios: string;
   roles: string;
   integraciones: string[];
+  integracionesOtro?: string;
   plazo: string;
+  fechaIdeal?: string;
   presupuesto: string;
   prioridades: Record<string, number>;
   negocio: string;
@@ -342,28 +345,76 @@ export default function DashboardPage() {
                         <p className="text-white text-sm">{b.usuarios || "—"}</p>
                       </div>
                       <div className="bg-gray-700/40 rounded-lg p-3">
+                        <p className="text-gray-500 text-xs mb-1">Roles Necesarios</p>
+                        <p className="text-white text-sm">{b.roles || "—"}</p>
+                      </div>
+                      <div className="bg-gray-700/40 rounded-lg p-3">
+                        <p className="text-gray-500 text-xs mb-1">Integraciones</p>
+                        <p className="text-white text-sm">{b.integraciones?.join(", ") || "—"}</p>
+                      </div>
+                      <div className="bg-gray-700/40 rounded-lg p-3">
                         <p className="text-gray-500 text-xs mb-1">Plazo</p>
                         <p className="text-white text-sm">{b.plazo || "—"}</p>
+                      </div>
+                      <div className="bg-gray-700/40 rounded-lg p-3">
+                        <p className="text-gray-500 text-xs mb-1">Fecha Ideal</p>
+                        <p className="text-white text-sm">{b.fechaIdeal || "—"}</p>
                       </div>
                       <div className="bg-gray-700/40 rounded-lg p-3">
                         <p className="text-gray-500 text-xs mb-1">Presupuesto</p>
                         <p className="text-white text-sm">{b.presupuesto ? `$${b.presupuesto}` : "—"}</p>
                       </div>
+                      <div className="bg-gray-700/40 rounded-lg p-3">
+                        <p className="text-gray-500 text-xs mb-1">Referencia</p>
+                        <p className="text-white text-sm">{b.referencia || "—"}</p>
+                      </div>
                     </div>
+
+                    {/* Prioridades */}
+                    {b.prioridades && (
+                      <div className="bg-gray-700/30 border border-gray-700 rounded-lg p-3 mb-3">
+                        <p className="text-gray-500 text-xs mb-2">Prioridades (1-5)</p>
+                        <div className="flex flex-wrap gap-x-4 gap-y-2">
+                          {Object.entries(b.prioridades).map(([k, v]) => (
+                            <div key={k} className="flex items-center gap-1.5">
+                              <span className="text-gray-400 capitalize text-xs">{k}:</span>
+                              <span className="text-white text-xs font-mono bg-gray-800 px-1.5 py-0.5 rounded">{v}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Text Fields */}
                     {b.negocio && (
-                      <div className="bg-gray-700/50 rounded p-3">
+                      <div className="bg-gray-700/50 rounded p-3 mb-2">
                         <p className="text-gray-500 text-xs mb-1">Descripción del negocio</p>
                         <p className="text-gray-300 text-sm whitespace-pre-wrap">{b.negocio}</p>
                       </div>
                     )}
-                    {b.funciones && b.funciones.length > 0 && (
+                    {b.tipoOtro && (
+                      <div className="bg-gray-700/40 border border-gray-700/50 rounded p-2 mb-2">
+                        <span className="text-gray-500 text-xs mr-2">Otro tipo de software:</span>
+                        <span className="text-gray-300 text-sm">{b.tipoOtro}</span>
+                      </div>
+                    )}
+                    {b.integracionesOtro && (
+                      <div className="bg-gray-700/40 border border-gray-700/50 rounded p-2 mb-2">
+                        <span className="text-gray-500 text-xs mr-2">Otras integraciones:</span>
+                        <span className="text-gray-300 text-sm">{b.integracionesOtro}</span>
+                      </div>
+                    )}
+                    {(b.funciones?.length > 0 || b.funcionesOtro) && (
                       <div className="mt-3">
                         <p className="text-gray-500 text-xs mb-1">Funciones solicitadas</p>
-                        <div className="flex flex-wrap gap-1">
-                          {b.funciones.map((f) => (
+                        <div className="flex flex-wrap gap-1 mb-2">
+                          {b.funciones?.map((f) => (
                             <span key={f} className="px-2 py-0.5 text-xs bg-gray-700 text-gray-300 rounded">{f}</span>
                           ))}
                         </div>
+                        {b.funcionesOtro && (
+                           <p className="text-gray-400 text-sm mt-1 italic border-l-2 border-gray-600 pl-2">{b.funcionesOtro}</p>
+                        )}
                       </div>
                     )}
                   </div>
