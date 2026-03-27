@@ -23,6 +23,24 @@ interface Consultation {
   source?: string;
 }
 
+interface Briefing {
+  tipo: string[];
+  tipoOtro: string;
+  plataforma: string[];
+  funciones: string[];
+  usuarios: string;
+  roles: string;
+  integraciones: string[];
+  plazo: string;
+  presupuesto: string;
+  prioridades: Record<string, number>;
+  negocio: string;
+  referencia: string;
+  contacto: string;
+  timestamp: string;
+  source?: string;
+}
+
 const urgencyColors: Record<string, string> = {
   urgente: "bg-red-500/20 text-red-400 border-red-500/30",
   semanas: "bg-yellow-500/20 text-yellow-400 border-yellow-500/30",
@@ -45,7 +63,8 @@ const stageLabels: Record<string, string> = {
 export default function DashboardPage() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [consultations, setConsultations] = useState<Consultation[]>([]);
-  const [activeTab, setActiveTab] = useState<"messages" | "consultations">("messages");
+  const [briefings, setBriefings] = useState<Briefing[]>([]);
+  const [activeTab, setActiveTab] = useState<"messages" | "consultations" | "briefings">("messages");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const router = useRouter();
@@ -69,16 +88,19 @@ export default function DashboardPage() {
 
   const fetchData = async () => {
     try {
-      const [messagesRes, consultationsRes] = await Promise.all([
+      const [messagesRes, consultationsRes, briefingsRes] = await Promise.all([
         fetch("/api/messages"),
         fetch("/api/consulta-tecnica"),
+        fetch("/api/briefing"),
       ]);
 
       const messagesData = await messagesRes.json();
       const consultationsData = await consultationsRes.json();
+      const briefingsData = await briefingsRes.json();
 
       if (messagesRes.ok) setMessages(messagesData.messages || []);
       if (consultationsRes.ok) setConsultations(consultationsData.consultations || []);
+      if (briefingsRes.ok) setBriefings(briefingsData.briefings || []);
     } catch {
       setError("Failed to load data");
     } finally {
@@ -125,7 +147,7 @@ export default function DashboardPage() {
 
       <main className="max-w-6xl mx-auto px-4 py-8">
         {/* Tabs */}
-        <div className="flex gap-2 mb-8 border-b border-gray-700">
+        <div className="flex gap-2 mb-8 border-b border-gray-700 flex-wrap">
           <button
             onClick={() => setActiveTab("messages")}
             className={`px-5 py-3 text-sm font-medium transition-colors border-b-2 -mb-px ${activeTab === "messages"
@@ -148,6 +170,18 @@ export default function DashboardPage() {
             🚀 Consultas Técnicas{" "}
             <span className="ml-1 px-2 py-0.5 bg-gray-700 rounded-full text-xs">
               {consultations.length}
+            </span>
+          </button>
+          <button
+            onClick={() => setActiveTab("briefings")}
+            className={`px-5 py-3 text-sm font-medium transition-colors border-b-2 -mb-px ${activeTab === "briefings"
+                ? "border-purple-400 text-purple-400"
+                : "border-transparent text-gray-400 hover:text-gray-200"
+              }`}
+          >
+            📋 Briefings de Proyecto{" "}
+            <span className="ml-1 px-2 py-0.5 bg-gray-700 rounded-full text-xs">
+              {briefings.length}
             </span>
           </button>
         </div>
@@ -261,6 +295,77 @@ export default function DashboardPage() {
                         <p className="text-white text-sm capitalize">{c.mainChallenge}</p>
                       </div>
                     </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </>
+        )}
+
+        {/* Briefings Tab */}
+        {activeTab === "briefings" && (
+          <>
+            <h2 className="text-2xl font-bold text-white mb-6">
+              Briefings de Proyecto ({briefings.length})
+            </h2>
+            {briefings.length === 0 ? (
+              <div className="text-gray-400 text-center py-12">No hay briefings enviados aún.</div>
+            ) : (
+              <div className="space-y-4">
+                {[...briefings].reverse().map((b, index) => (
+                  <div
+                    key={index}
+                    className="bg-gray-800 border border-gray-700 rounded-lg p-6"
+                  >
+                    <div className="flex justify-between items-start mb-4">
+                      <div>
+                        <h3 className="text-lg font-semibold text-white">{b.contacto}</h3>
+                        {b.tipo && b.tipo.length > 0 && (
+                          <div className="flex flex-wrap gap-1 mt-1">
+                            {b.tipo.map((t) => (
+                              <span key={t} className="px-2 py-0.5 text-xs bg-purple-500/20 border border-purple-500/30 text-purple-400 rounded">
+                                {t}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                      <span className="text-gray-400 text-xs">{formatDate(b.timestamp)}</span>
+                    </div>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-3">
+                      <div className="bg-gray-700/40 rounded-lg p-3">
+                        <p className="text-gray-500 text-xs mb-1">Plataforma</p>
+                        <p className="text-white text-sm">{b.plataforma?.join(", ") || "—"}</p>
+                      </div>
+                      <div className="bg-gray-700/40 rounded-lg p-3">
+                        <p className="text-gray-500 text-xs mb-1">Usuarios</p>
+                        <p className="text-white text-sm">{b.usuarios || "—"}</p>
+                      </div>
+                      <div className="bg-gray-700/40 rounded-lg p-3">
+                        <p className="text-gray-500 text-xs mb-1">Plazo</p>
+                        <p className="text-white text-sm">{b.plazo || "—"}</p>
+                      </div>
+                      <div className="bg-gray-700/40 rounded-lg p-3">
+                        <p className="text-gray-500 text-xs mb-1">Presupuesto</p>
+                        <p className="text-white text-sm">{b.presupuesto ? `$${b.presupuesto}` : "—"}</p>
+                      </div>
+                    </div>
+                    {b.negocio && (
+                      <div className="bg-gray-700/50 rounded p-3">
+                        <p className="text-gray-500 text-xs mb-1">Descripción del negocio</p>
+                        <p className="text-gray-300 text-sm whitespace-pre-wrap">{b.negocio}</p>
+                      </div>
+                    )}
+                    {b.funciones && b.funciones.length > 0 && (
+                      <div className="mt-3">
+                        <p className="text-gray-500 text-xs mb-1">Funciones solicitadas</p>
+                        <div className="flex flex-wrap gap-1">
+                          {b.funciones.map((f) => (
+                            <span key={f} className="px-2 py-0.5 text-xs bg-gray-700 text-gray-300 rounded">{f}</span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
